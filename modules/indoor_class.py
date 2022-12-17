@@ -1,7 +1,8 @@
 import time
 import sys
+import os
 #append phidget library folder
-sys.path.append("..\\lib")
+sys.path.insert(0, os.path.abspath('../lib'))
 from Phidget22.Phidget import *
 from Phidget22.Devices.DigitalOutput import *
 
