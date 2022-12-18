@@ -19,6 +19,8 @@ def main():
         print("Moist 0 sensor value: {}".format(Phidget.moist_sensor()))
         print("Flow 0 sensor value: {}".format(Phidget.flow_0()))
         print("Flow 1 sensor value: {}".format(Phidget.flow_1()))
+        print("Piranometro 0 sensor value: {}".format(Phidget.thermopile_sensor()))
+        print("Anemometer 0 sensor value: {}".format(Phidget.anemometer_sensor()))
         print("Estado valvula 0 (False close; True open): {}".format(Phidget.valve0_state))
         print("Estado valvula 0 (False close; True open): {}".format(Phidget.valve1_state))
         time.sleep(0.2)

@@ -20,6 +20,7 @@ class Simple_Phidget:
         self.flow0 = VoltageInput()
         self.flow1 = VoltageInput()
         self.thermopile = VoltageInput()
+        self.anemometer = VoltageInput()
         
         #Canal de actuadores
         self.relay_out0.setChannel(0) #Rele 0 en Digital Output 0
@@ -30,6 +31,7 @@ class Simple_Phidget:
         self.flow0.setChannel(1) #Sensor de flujo 0 en Analog Input 1
         self.flow1.setChannel(2) #Sensor de flujo 1 en Analog Input 2
         self.thermopile.setChannel(3) #Piranometro en Analog Input 3
+        self.anemometer.setChannel(4) #Anemometro en Analog Input 4
 
         #Open your Phidgets and wait for attachment
         self.relay_out0.openWaitForAttachment(5000)
@@ -38,6 +40,7 @@ class Simple_Phidget:
         self.flow0.openWaitForAttachment(5000)
         self.flow1.openWaitForAttachment(5000)
         self.thermopile.openWaitForAttachment(5000)
+        self.anemometer.openWaitForAttachment(5000)
 
     def valve_0(self, valve0_state):
         if valve0_state:
@@ -68,10 +71,13 @@ class Simple_Phidget:
     def thermopile_sensor(self):
         return self.thermopile.getVoltage()
 
+    def anemometer_sensor(self):
+        return self.anemometer.getVoltage()
+
     def begin(self):
         self.valve_0(False)
         self.valve_1(False)
-        print("BEGIN")
+        print("Valvulas Cerradas para comenzar")
         time.sleep(2)
 
     def stop(self):
@@ -81,3 +87,4 @@ class Simple_Phidget:
         self.relay_out0.close()
         self.relay_out1.close()
         self.thermopile.close()
+        self.anemometer.close()
