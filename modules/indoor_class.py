@@ -1,7 +1,7 @@
 import time
 from Phidget22.Phidget import *
-from Phidget22.Devices.DigitalOutput import *
-from Phidget22.Devices.VoltageInput import *
+from Phidget22.Devices.DigitalOutput import DigitalOutput
+from Phidget22.Devices.VoltageInput import VoltageInput
 
 
 class Simple_Phidget:
@@ -26,12 +26,12 @@ class Simple_Phidget:
         self.relay_out0.setChannel(0) #Rele 0 en Digital Output 0
         self.relay_out1.setChannel(1) #Rele 1 en Digital Output 1
 
-        #Canal de sensores
-        self.moist0.setChannel(0) #Sensor humedad en Analog Input 0
+        #Canal de sensores            
         self.flow0.setChannel(1) #Sensor de flujo 0 en Analog Input 1
         self.flow1.setChannel(2) #Sensor de flujo 1 en Analog Input 2
         self.thermopile.setChannel(3) #Piranometro en Analog Input 3
         self.anemometer.setChannel(4) #Anemometro en Analog Input 4
+        self.moist0.setChannel(7) #Sensor humedad en Analog Input 7
 
         #Open your Phidgets and wait for attachment
         self.relay_out0.openWaitForAttachment(5000)
