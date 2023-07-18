@@ -2,6 +2,16 @@ import time
 from time_zone_request import call_datetime, check_log_time_variable
 from logger import add_status_log_entry, get_tiempo_actual_csv
 
+#from phidget_simple import Simple_Phidget #RPI
+from modules.mock_class import Simple_Phidget #PC
+
+#Valores corte
+HUMEDAD_MINIMA = 3.13
+
+
+Phidget = Simple_Phidget()
+Phidget.begin()
+
 class StateMachine:
     def __init__(self):
         self.state = None
@@ -36,7 +46,11 @@ class InitState(State):
         time.sleep(1)  # Wait for 1 second
         init_time = ''
         init_time = call_datetime()[0]
-        add_status_log_entry(State= 'Iniciando',tiempo_inicio=init_time, tiempo_actual= init_time , tiempo_termino=init_time)
+        estado_valvula_0 = Phidget.valve0_state
+        estado_valvula_1 = Phidget.valve1_state
+        estado_humedad_0 = round(Phidget.moist_sensor(),2)
+        estado_humedad_1 = round(Phidget.moist_sensor(),2)
+        add_status_log_entry(State= 'Iniciando',tiempo_inicio=init_time, tiempo_actual= init_time , tiempo_termino=init_time, valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1)
         state_machine.set_state(WaitingState())
 
 
@@ -46,12 +60,21 @@ class WaitingState(State):
 
     def execute(self):
         print("Esperando para regar, por evapotranspiracion o humedad")
-        time.sleep(10)  # Wait for 10 seconds
+        time.sleep(60)  # Wait for 60 seconds
+        estado_valvula_0 = Phidget.valve0_state
+        estado_valvula_1 = Phidget.valve1_state
+        estado_humedad_0 = round(Phidget.moist_sensor(),2)
+        estado_humedad_1 = round(Phidget.moist_sensor(),2)
         
-        while check_log_time_variable(get_tiempo_actual_csv()):
-            
-            add_status_log_entry(State= 'EsperandoRiego', tiempo_actual=call_datetime()[0])
-            state_machine.set_state(ActiveState())
+        if check_log_time_variable(get_tiempo_actual_csv()):
+            if (estado_humedad_0 < HUMEDAD_MINIMA):
+                state_machine.set_state(ActiveState())
+
+            else:
+                add_status_log_entry(State= 'EsperandoRiego', tiempo_actual=call_datetime()[0], valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1)
+
+
+                
         
 
 class ActiveState(State):
@@ -63,12 +86,24 @@ class ActiveState(State):
         time.sleep(1)  # Wait for 1 second
         before_irrigation = call_datetime()[0]
         timer = time.time()
+        
+        
         while (time.time() - timer < 30.0):
-            print("Regando {}".format(time.time() - timer))
             
-
+            Phidget.valve_1(True)
+            Phidget.valve_0(True)
+        
+        print("Finalizando riego")
+        estado_valvula_0 = Phidget.valve0_state
+        estado_valvula_1 = Phidget.valve1_state
+        
+        Phidget.valve_1(False)
+        Phidget.valve_0(False)
+            
+        estado_humedad_0 = round(Phidget.moist_sensor(),2)
+        estado_humedad_1 = round(Phidget.moist_sensor(),2)
         after_irrigation = call_datetime()[0]  
-        add_status_log_entry(State= 'Regando', tiempo_inicio=before_irrigation,tiempo_actual=call_datetime()[0], tiempo_termino=after_irrigation)
+        add_status_log_entry(State= 'Regando', tiempo_inicio=before_irrigation,tiempo_actual=call_datetime()[0], tiempo_termino=after_irrigation, valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1)
         state_machine.set_state(WaitingState())
 
 # Create an instance of the state machine

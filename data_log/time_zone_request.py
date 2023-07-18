@@ -7,7 +7,7 @@ from datetime import datetime
 def call_datetime():
 
     # Fetch the current time from an internet time API
-    response = requests.get('http://worldtimeapi.org/api/ip')
+    response = requests.get('http://worldtimeapi.org/api/ip', timeout=1)
     data = response.json()
 
     # Extract the current time from the API response
@@ -32,7 +32,7 @@ def check_log_time_variable(previous_datetime):
     # Calculate the time difference in minutes
     time_diff = (current_datetime - previous_datetime).total_seconds() / 60
 
-    if time_diff >= 0.1:
+    if time_diff >= 10:
         # Toggle the boolean variable
         return True
     
