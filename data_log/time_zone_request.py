@@ -7,7 +7,7 @@ from datetime import datetime
 def call_datetime():
 
     # Fetch the current time from an internet time API
-    response = requests.get('http://worldtimeapi.org/api/ip', timeout=1)
+    response = requests.get('http://worldtimeapi.org/api/ip', timeout=60)
     data = response.json()
 
     # Extract the current time from the API response

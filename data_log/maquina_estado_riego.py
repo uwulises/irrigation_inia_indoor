@@ -3,7 +3,7 @@ from time_zone_request import call_datetime, check_log_time_variable
 from logger import add_status_log_entry, get_tiempo_actual_csv
 
 #from phidget_simple import Simple_Phidget #RPI
-from modules.mock_class import Simple_Phidget #PC
+from mock_class import Simple_Phidget #PC
 
 #Valores corte
 HUMEDAD_MINIMA = 3.13
