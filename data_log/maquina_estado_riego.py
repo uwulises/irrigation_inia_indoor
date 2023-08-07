@@ -9,7 +9,7 @@ from logger import add_status_log_entry, get_tiempo_actual_csv
 from phidget_simple import Simple_Phidget
 
 #Valores corte para humedad, revisar en el lugar
-HUMEDAD_MINIMA = 3.13
+HUMEDAD_MINIMA = 1.25
 
 #Creacion de objeto phidget
 Phidget = Simple_Phidget()
