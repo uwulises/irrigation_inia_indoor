@@ -12,6 +12,7 @@ def call_datetime():
 
     # Extract the current time from the API response
     current_time = data['datetime']
+    AAAA_MM_DD = data['datetime'][:10]
 
     # Convert the time string to a datetime object
     time_object = datetime.fromisoformat(current_time)
@@ -21,7 +22,7 @@ def call_datetime():
     minute = time_object.minute
     second = time_object.second
 
-    return current_time, "T{}:{}:{}".format(hour, minute, second), hour, minute, second
+    return current_time, AAAA_MM_DD,"T{}:{}:{}".format(hour, minute, second), hour, minute, second
 
 
 def check_log_time_variable(previous_datetime):
