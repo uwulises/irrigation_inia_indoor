@@ -2,8 +2,7 @@ import time
 from time_zone_request import call_datetime, check_log_time_variable
 from logger import add_status_log_entry, get_tiempo_actual_csv
 
-#from phidget_simple import Simple_Phidget #RPI
-from mock_class import Simple_Phidget #PC
+from phidget_simple import Simple_Phidget #RPI
 
 #Valores corte
 HUMEDAD_MINIMA = 3.13
@@ -48,8 +47,8 @@ class InitState(State):
         init_time = call_datetime()[0]
         estado_valvula_0 = Phidget.valve0_state
         estado_valvula_1 = Phidget.valve1_state
-        estado_humedad_0 = round(Phidget.moist_sensor(),2)
-        estado_humedad_1 = round(Phidget.moist_sensor(),2)
+        estado_humedad_0 = round(Phidget.moist_sensor0(),2)
+        estado_humedad_1 = round(Phidget.moist_sensor1(),2)
         add_status_log_entry(State= 'Iniciando',tiempo_inicio=init_time, tiempo_actual= init_time , tiempo_termino=init_time, valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1)
         state_machine.set_state(WaitingState())
 
@@ -63,8 +62,8 @@ class WaitingState(State):
         time.sleep(60)  # Wait for 60 seconds
         estado_valvula_0 = Phidget.valve0_state
         estado_valvula_1 = Phidget.valve1_state
-        estado_humedad_0 = round(Phidget.moist_sensor(),2)
-        estado_humedad_1 = round(Phidget.moist_sensor(),2)
+        estado_humedad_0 = round(Phidget.moist_sensor0(),2)
+        estado_humedad_1 = round(Phidget.moist_sensor1(),2)
         
         if check_log_time_variable(get_tiempo_actual_csv()):
             if (estado_humedad_0 < HUMEDAD_MINIMA):
