@@ -20,8 +20,8 @@ def main():
         time.sleep(0.2)
         i=i+1
     
-    Phidget.valve_1(True)
-    Phidget.valve_0(True)
+    Phidget.valve_1(False)
+    Phidget.valve_0(False)
     time.sleep(2)
 
     Phidget.stop()
