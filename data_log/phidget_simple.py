@@ -66,7 +66,7 @@ class Simple_Phidget:
         return self.moist0.getVoltage()
     
     def moist_sensor1(self):
-        return self.moist0.getVoltage()
+        return self.moist1.getVoltage()
 
     def flow_0(self):
         return self.flow0.getVoltage()

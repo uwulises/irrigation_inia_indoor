@@ -12,7 +12,7 @@ def main():
     i=0
     while i<20:
         print("Moist 0 sensor value: {}".format(Phidget.moist_sensor0()))
-        print("Moist 0 sensor value: {}".format(Phidget.moist_sensor1()))
+        print("Moist 1 sensor value: {}".format(Phidget.moist_sensor1()))
         print("Flow 0 sensor value: {}".format(Phidget.flow_0()))
         print("Flow 1 sensor value: {}".format(Phidget.flow_1()))
         print("Estado valvula 0 (False close; True open): {}".format(Phidget.valve0_state))
