@@ -10,7 +10,7 @@ def main():
     Phidget.valve_0(True)
     time.sleep(2)
     i=0
-    while i<20:
+    while i<60:
         print("Moist 0 sensor value: {}".format(Phidget.moist_sensor0()))
         print("Moist 1 sensor value: {}".format(Phidget.moist_sensor1()))
         print("Flow 0 sensor value: {}".format(Phidget.flow_0()))
