@@ -17,7 +17,7 @@ def main():
         print("Flow 1 sensor value: {}".format(Phidget.flow_1()))
         print("Estado valvula 0 (False close; True open): {}".format(Phidget.valve0_state))
         print("Estado valvula 1 (False close; True open): {}".format(Phidget.valve1_state))
-        time.sleep(0.2)
+        time.sleep(1)
         i=i+1
     
     Phidget.valve_1(False)
