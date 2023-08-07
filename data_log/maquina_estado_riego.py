@@ -85,7 +85,7 @@ class WaitingState(State):
         estado_humedad_1 = round(Phidget.moist_sensor1(),2)
 
         #Si pasan >10min, check -> True
-        if check_log_time_variable(get_tiempo_actual_csv()):
+        if check_log_time_variable(get_tiempo_actual_csv(year_month_day)):
             #Si la condicion de humedad se cumple ingresa a estado de riego
             if (estado_humedad_0 < HUMEDAD_MINIMA):
                 state_machine.set_state(ActiveState())

@@ -24,10 +24,10 @@ def add_status_log_entry(AAAA_MM_DD='2023-00-00',State = '', tiempo_inicio='', t
     datalog.to_excel('invernadero_log_excel_{}.xlsx'.format(AAAA_MM_DD))
 
 
-def get_tiempo_actual_csv():
+def get_tiempo_actual_csv(AAAA_MM_DD):
     try:
         # Read the existing CSV file
-        log = pd.read_csv('invernadero_log.csv')
+        log = pd.read_csv('invernadero_log_csv_{}.csv'.format(AAAA_MM_DD))
     except FileNotFoundError:
         # Create a new DataFrame if the file doesn't exist
         log = pd.DataFrame(columns=['State' ,'Initial Time', 'Tiempo Actual','Final Time', 'valve0_status',
