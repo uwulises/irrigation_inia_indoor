@@ -117,8 +117,8 @@ class ActiveState(State):
         
         Phidget.valve_1(False)
         Phidget.valve_0(False)
-        caudal_0 = round(Phidget.flow0(),2)
-        caudal_1 = round(Phidget.flow1(),2)
+        caudal_0 = round(Phidget.flow_0(),2)
+        caudal_1 = round(Phidget.flow_1(),2)
         estado_humedad_0 = round(Phidget.moist_sensor0(),2)
         estado_humedad_1 = round(Phidget.moist_sensor1(),2)
         after_irrigation = call_datetime()[0]  
