@@ -33,7 +33,7 @@ class Simple_Phidget:
         self.thermopile.setChannel(3) #Piranometro en Analog Input 3
         self.anemometer.setChannel(4) #Anemometro en Analog Input 4
         self.moist0.setChannel(6) #Sensor humedad en Analog Input 7
-        self.moist0.setChannel(7) #Sensor humedad en Analog Input 7
+        self.moist1.setChannel(7) #Sensor humedad en Analog Input 7
 
         #Open your Phidgets and wait for attachment
         self.relay_out0.openWaitForAttachment(5000)
@@ -62,7 +62,10 @@ class Simple_Phidget:
             self.valve1_state=False
             self.relay_out1.setDutyCycle(1)
 
-    def moist_sensor(self):
+    def moist_sensor0(self):
+        return self.moist0.getVoltage()
+    
+    def moist_sensor1(self):
         return self.moist0.getVoltage()
 
     def flow_0(self):
@@ -85,6 +88,7 @@ class Simple_Phidget:
 
     def stop(self):
         self.moist0.close()
+        self.moist1.close()
         self.flow0.close()
         self.flow1.close()
         self.relay_out0.close()
