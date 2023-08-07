@@ -1,3 +1,4 @@
+#Importacion de request
 import time
 from time_zone_request import call_datetime, check_log_time_variable
 from logger import add_status_log_entry, get_tiempo_actual_csv
@@ -99,8 +100,8 @@ class ActiveState(State):
         Phidget.valve_1(False)
         Phidget.valve_0(False)
             
-        estado_humedad_0 = round(Phidget.moist_sensor(),2)
-        estado_humedad_1 = round(Phidget.moist_sensor(),2)
+        estado_humedad_0 = round(Phidget.moist_sensor0(),2)
+        estado_humedad_1 = round(Phidget.moist_sensor1(),2)
         after_irrigation = call_datetime()[0]  
         add_status_log_entry(State= 'Regando', tiempo_inicio=before_irrigation,tiempo_actual=call_datetime()[0], tiempo_termino=after_irrigation, valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1)
         state_machine.set_state(WaitingState())
