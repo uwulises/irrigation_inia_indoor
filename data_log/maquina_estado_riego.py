@@ -15,7 +15,6 @@ HUMEDAD_MINIMA = 1.25
 Phidget = Simple_Phidget()
 Phidget.begin() #Inicializacion minima
 
-
 '''Maquina de estado
 Revisa el estado de humedad en cada lado del invernadero
 Revisa el paso del tiempo real
@@ -56,6 +55,7 @@ class InitState(State):
         
 
     def execute(self):
+        global year_month_day
         print("Iniciando sistema de riego.")
         time.sleep(1)  #Espera de inicializacion
         init_time = ''
@@ -77,6 +77,7 @@ class WaitingState(State):
         super().__init__('Waiting')
 
     def execute(self):
+        global year_month_day
         print("Esperando para regar, por evapotranspiracion o humedad")
         time.sleep(60)  # Revisa cada 60seg el estado de los sensores de humedad
         estado_valvula_0 = Phidget.valve0_state
@@ -105,6 +106,7 @@ class ActiveState(State):
         super().__init__('Active')
 
     def execute(self):
+        global year_month_day
         print("Regando.")
         time.sleep(1)  # Wait for 1 second
         call_time = call_datetime()
