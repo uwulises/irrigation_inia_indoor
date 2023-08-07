@@ -21,7 +21,7 @@ def add_status_log_entry(State = '', tiempo_inicio='', tiempo_actual='' , tiempo
     datalog = pd.concat([datalog, new_entry], ignore_index=True)
     # Save the DataFrame to the CSV file
     datalog.to_csv('invernadero_log.csv', index=False)
-    datalog.to_excel("invernader_log_excel.xlsx")
+    datalog.to_excel("invernadero_log_excel.xlsx")
 
 
 
