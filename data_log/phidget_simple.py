@@ -3,7 +3,14 @@ from Phidget22.Phidget import *
 from Phidget22.Devices.DigitalOutput import DigitalOutput
 from Phidget22.Devices.VoltageInput import VoltageInput
 
-
+'''
+Clase de PhidgetInterfaceKit 8/8/8 w/6 Port Hub, de forma simplificada se utilizan
+dos (2) reles como actuadores para valvulas de apertura de flujo
+dos (2) entradas de voltaje analogo para sensado de humedad de suelo
+dos (2) entradas de voltaje analogo para sensado de caudal
+una (1) entrada de voltaje analogo para sensado de temperatura
+una (1) entrada de voltaje analogo para sensado de velocidad del viento
+'''
 class Simple_Phidget:
     def __init__(self, valve0_state=False, valve1_state=False):
         self.valve0_state = valve0_state
