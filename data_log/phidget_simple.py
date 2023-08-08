@@ -55,19 +55,19 @@ class Simple_Phidget:
     def valve_0(self, valve0_state):
         if valve0_state:
             self.valve0_state=True
-            self.relay_out0.setDutyCycle(0)
+            self.relay_out0.setDutyCycle(1)
 
         else:
             self.valve0_state=False
-            self.relay_out0.setDutyCycle(1)
+            self.relay_out0.setDutyCycle(0)
 
     def valve_1(self, valve1_state):
         if valve1_state:
             self.valve1_state=True
-            self.relay_out1.setDutyCycle(0)
+            self.relay_out1.setDutyCycle(1)
         else:
             self.valve1_state=False
-            self.relay_out1.setDutyCycle(1)
+            self.relay_out1.setDutyCycle(0)
 
     def moist_sensor0(self):
         return self.moist0.getVoltage()
