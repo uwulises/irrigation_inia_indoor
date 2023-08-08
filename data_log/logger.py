@@ -6,7 +6,7 @@ def add_status_log_entry(AAAA_MM_DD='2023-00-00',State = '', tiempo_inicio='', t
     # Check if the CSV file already exists
     try:
         # Read the existing CSV file
-        datalog = pd.read_csv('invernadero_log_csv_{}.csv'.format(AAAA_MM_DD))
+        datalog = pd.read_csv('log/invernadero_log_csv_{}.csv'.format(AAAA_MM_DD))
     except FileNotFoundError:
         # Create a new DataFrame if the file doesn't exist
         datalog = pd.DataFrame(columns=['State' ,'Initial Time', 'Tiempo Actual','Final Time', 'valve0_status',
@@ -20,14 +20,14 @@ def add_status_log_entry(AAAA_MM_DD='2023-00-00',State = '', tiempo_inicio='', t
     # Append the new row to the DataFrame
     datalog = pd.concat([datalog, new_entry], ignore_index=True)
     # Save the DataFrame to the CSV file
-    datalog.to_csv('invernadero_log_csv_{}.csv'.format(AAAA_MM_DD), index=False)
-    datalog.to_excel('invernadero_log_excel_{}.xlsx'.format(AAAA_MM_DD))
+    datalog.to_csv('log/invernadero_log_csv_{}.csv'.format(AAAA_MM_DD), index=False)
+    datalog.to_excel('log/invernadero_log_excel_{}.xlsx'.format(AAAA_MM_DD))
 
 
 def get_tiempo_actual_csv(AAAA_MM_DD='2023-00-00'):
     try:
         # Read the existing CSV file
-        log = pd.read_csv('invernadero_log_csv_{}.csv'.format(AAAA_MM_DD))
+        log = pd.read_csv('log/invernadero_log_csv_{}.csv'.format(AAAA_MM_DD))
     except FileNotFoundError:
         # Create a new DataFrame if the file doesn't exist
         log = pd.DataFrame(columns=['State' ,'Initial Time', 'Tiempo Actual','Final Time', 'valve0_status',
