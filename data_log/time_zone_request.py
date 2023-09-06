@@ -18,8 +18,7 @@ def call_datetime():
     # Extract the current time from the API response
     current_time = data['datetime']
     AAAA_MM_DD = data['datetime'][:10]
-    print(current_time)
-    print(AAAA_MM_DD)
+
     # Convert the time string to a datetime object
     time_object = datetime.fromisoformat(current_time)
 
