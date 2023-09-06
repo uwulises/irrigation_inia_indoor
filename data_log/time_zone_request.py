@@ -1,19 +1,25 @@
 import requests
 from datetime import datetime
-
 # Funcion para obtener fecha y hora segun ubicacion geografica
 
 
 def call_datetime():
 
-    # Fetch the current time from an internet time API
-    response = requests.get('http://worldtimeapi.org/api/ip', timeout=60)
-    data = response.json()
+    #try to get the time from the internet, if time out then use local time
+    try:
+        # Fetch the current time from an internet time API
+        response = requests.get('http://worldtimeapi.org/api/ip', timeout=60)
+        data = response.json()
+    except:
+        #get the local time from raspberry pi
+        data = {'datetime': datetime.now().isoformat()}
+        print("No se pudo obtener la hora de internet, se usara la hora local")
 
     # Extract the current time from the API response
     current_time = data['datetime']
     AAAA_MM_DD = data['datetime'][:10]
-
+    print(current_time)
+    print(AAAA_MM_DD)
     # Convert the time string to a datetime object
     time_object = datetime.fromisoformat(current_time)
 

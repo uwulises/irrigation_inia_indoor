@@ -17,6 +17,7 @@ class Simple_Phidget:
 
         #Sensores
         self.moist0 = VoltageInput()
+        self.moist1 = VoltageInput()
         self.flow0 = VoltageInput()
         self.flow1 = VoltageInput()
         self.thermopile = VoltageInput()
@@ -31,12 +32,14 @@ class Simple_Phidget:
         self.flow1.setChannel(2) #Sensor de flujo 1 en Analog Input 2
         self.thermopile.setChannel(3) #Piranometro en Analog Input 3
         self.anemometer.setChannel(4) #Anemometro en Analog Input 4
+        self.moist0.setChannel(6) #Sensor humedad en Analog Input 7
         self.moist0.setChannel(7) #Sensor humedad en Analog Input 7
 
         #Open your Phidgets and wait for attachment
         self.relay_out0.openWaitForAttachment(5000)
         self.relay_out1.openWaitForAttachment(5000)
         self.moist0.openWaitForAttachment(5000)
+        self.moist1.openWaitForAttachment(5000)
         self.flow0.openWaitForAttachment(5000)
         self.flow1.openWaitForAttachment(5000)
         self.thermopile.openWaitForAttachment(5000)
