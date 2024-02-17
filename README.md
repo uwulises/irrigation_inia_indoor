@@ -15,9 +15,10 @@ PhidgetInterfaceKit 8/8/8 w/6 Port Hub
 
 # Instalacion via pip:
 
-- pip install Phidget22
+- pip install Phidget22 (quizas tengas que instalar manualmente https://www.phidgets.com/docs/OS_-_Linux#Package_Install-0 )
 - pip install pandas
 
 # Librerias:
 - numpy == 1.26.4
 - pandas == 2.2.0
+- openpyxl (para crear excel)
