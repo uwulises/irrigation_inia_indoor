@@ -1,7 +1,7 @@
-from phidget_simple import Simple_Phidget
+from phidget_simple import SimplePhidget
 import time
 
-Phidget = Simple_Phidget()
+Phidget = SimplePhidget()
 
 def main():
     Phidget.begin()

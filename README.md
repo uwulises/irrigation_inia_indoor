@@ -6,10 +6,11 @@ PhidgetInterfaceKit 8/8/8 w/6 Port Hub
 - sudo apt update && sudo apt install git
 - sudo apt update && sudo apt upgrade -y
 - sudo apt install python3-pip
+- sudo apt install screen
 - sudo apt-get install python3-venv (solo si es necesario)
 
 ## Clonar repositorio
-
+- git clone 
 - cd irrigation_inia_indoor
 
 ## Creación de ambiente virtual:

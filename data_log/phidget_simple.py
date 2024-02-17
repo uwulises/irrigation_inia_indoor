@@ -11,7 +11,7 @@ dos (2) entradas de voltaje analogo para sensado de caudal
 una (1) entrada de voltaje analogo para sensado de temperatura
 una (1) entrada de voltaje analogo para sensado de velocidad del viento
 '''
-class Simple_Phidget:
+class SimplePhidget:
     def __init__(self, valve0_state=False, valve1_state=False):
         self.valve0_state = valve0_state
         self.valve1_state = valve1_state

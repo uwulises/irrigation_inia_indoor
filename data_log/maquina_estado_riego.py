@@ -6,13 +6,13 @@ from time_zone_request import call_datetime, check_log_time_variable
 from logger import add_status_log_entry, get_tiempo_actual_csv
 # Clase de PhidgetInterfaceKit 8/8/8 w/6 Port Hub
 # Objeto Phidget cuenta con acciones I/O
-from phidget_simple import Simple_Phidget
+from phidget_simple import SimplePhidget
 
 # Valores corte para humedad, revisar en el lugar
 HUMEDAD_MINIMA = 1.25
 
 # Creacion de objeto phidget
-Phidget = Simple_Phidget()
+Phidget = SimplePhidget()
 Phidget.begin()  # Inicializacion minima
 
 '''Maquina de estado
