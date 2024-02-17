@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 # Funcion para guardar datos de funcionamiento, considera tiempos de inicio y final, estado de sensores y valvulas
 
