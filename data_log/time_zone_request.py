@@ -6,12 +6,11 @@ def call_datetime():
 
     #get the local time from raspberry pi
     data = {'datetime': datetime.now().isoformat()}
-    print("No se pudo obtener la hora de internet, se usara la hora local")
-
+    
     # Extract the current time from the API response
     current_time = data['datetime']
     AAAA_MM_DD = data['datetime'][:10]
-
+    
     # Convert the time string to a datetime object
     time_object = datetime.fromisoformat(current_time)
 
@@ -19,6 +18,7 @@ def call_datetime():
     hour = time_object.hour
     minute = time_object.minute
     second = time_object.second
+    print("Fecha: ", AAAA_MM_DD, "Hora HH:MIN: ", hour, ":", minute)
 
     return current_time, AAAA_MM_DD,"T{}:{}:{}".format(hour, minute, second), hour, minute, second
 
@@ -33,6 +33,7 @@ def check_log_time_variable(previous_datetime):
 
     if time_diff >= 10:
         # Toggle the boolean variable
+        print("Han pasado 10min desde el ultimo registro de datos")
         return True
     
     return False

@@ -10,6 +10,15 @@ from phidget_simple import SimplePhidget
 
 # Valores corte para humedad, revisar en el lugar
 HUMEDAD_MINIMA = 1.25
+#Evapotranspiracion maxima para riego
+EVAPOTRANSPIRACION_MINIMA = 0.5
+# Variable de evapotranspiracion acumulada
+EVAPOTRANSPIRACION_ACUMULADA = 0
+
+# Variable de ultima fecha y hora de registro de riego
+
+#Variable para evitar riego si ya se realizo hace poco tiempo
+
 
 # Creacion de objeto phidget
 Phidget = SimplePhidget()
@@ -24,6 +33,8 @@ Si pasa un tiempo >10min se revisa la humedad, evapotranspiracion
 Cuando la condicion de humedad minima se cumple y/o la de evapotranspiracion, se ejecutan 30seg de riego continuo
 y se loggea la informacion de los sensores durante el riego y la humedad final del sensor.
 Si la condicion no se cumple se loggea informacion del estado de los sensores con el texto: EsperandoRiego
+
+Una vez al dia se calcula la nueva evapotranspiracion acumulada y se reinicia el valor de la evapotranspiracion diaria
 '''
 
 
@@ -62,6 +73,7 @@ class InitState(State):
         print("Iniciando sistema de riego.")
         time.sleep(1)  # Espera de inicializacion
         init_time = ''
+        print("Llamada a hora local")
         init_call_time = call_datetime()
         init_time = init_call_time[0]
         year_month_day = init_call_time[1]
