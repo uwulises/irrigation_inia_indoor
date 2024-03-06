@@ -47,13 +47,22 @@ class StateMachine:
 
     def run(self):
         while True:
-            if self.state is not None:
-                self.state.execute()
-            elif self.state is None:
-                print("None state")
-                time.sleep(10)
-            else:
-                break
+            try:
+                if self.state:
+                    self.state.execute()
+                else:
+                    print("None state")
+                    time.sleep(10)
+            except Exception as e:
+                print(f"Error occurred: {str(e)}")
+                print("Restarting the state machine...")
+                self.state = InitState()  # Reset the state machine to initial state
+                #write a text file with the error and the time
+                with open('log/error_log.txt', 'a') as file:
+                    file.write(f"Error occurred: {str(e)} at {call_datetime()[0]}\n")
+                    #close the file
+                    file.close()
+                
 
 
 class State:

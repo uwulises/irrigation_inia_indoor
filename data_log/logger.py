@@ -25,7 +25,7 @@ def add_status_log_entry(AAAA_MM_DD='2023-00-00',State = '', tiempo_inicio='', t
     datalog.to_excel('log/invernadero_log_excel_{}.xlsx'.format(AAAA_MM_DD))
 
 
-def get_tiempo_actual_csv(AAAA_MM_DD='2023-00-00'):
+def get_tiempo_actual_csv(AAAA_MM_DD='2024-00-00'):
     try:
         # Read the existing CSV file
         log = pd.read_csv('log/invernadero_log_csv_{}.csv'.format(AAAA_MM_DD))

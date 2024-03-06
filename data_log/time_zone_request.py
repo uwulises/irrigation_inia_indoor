@@ -18,7 +18,7 @@ def call_datetime():
     hour = time_object.hour
     minute = time_object.minute
     second = time_object.second
-    print("Fecha: ", AAAA_MM_DD, "Hora HH:MIN: ", hour, ":", minute)
+    print("Fecha: ", AAAA_MM_DD, "Hora: ", hour, ":", minute)
 
     return current_time, AAAA_MM_DD,"T{}:{}:{}".format(hour, minute, second), hour, minute, second
 
