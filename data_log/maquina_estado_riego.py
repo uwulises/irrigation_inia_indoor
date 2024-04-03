@@ -26,7 +26,7 @@ Phidget.begin()  # Inicializacion minima
 
 '''Maquina de estado
 Revisa el estado de humedad en cada lado del invernadero
-Revisa el paso del tiempo real
+Revisa el paso del tiempo real (desde la raspberry)
 Revisa el estado de la evapotranspiracion
 
 Si pasa un tiempo >10min se revisa la humedad, evapotranspiracion
@@ -114,7 +114,7 @@ class WaitingState(State):
         # Si pasan >10min, check -> True
         if check_log_time_variable(get_tiempo_actual_csv(year_month_day)):
             # Si la condicion de humedad se cumple ingresa a estado de riego
-            if (estado_humedad_0 < HUMEDAD_MINIMA):
+            if (estado_humedad_0 < HUMEDAD_MINIMA and estado_humedad_0>0.0):
                 state_machine.set_state(ActiveState())
 
             else:
