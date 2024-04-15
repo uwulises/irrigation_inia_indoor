@@ -4,20 +4,21 @@ import time
 from time_zone_request import call_datetime, check_log_time_variable
 # Funciones para crear y agregar informacion en .csv y .xlsx
 from logger import add_status_log_entry, get_tiempo_actual_csv
+from agrometer_evap_request import init_state_entry
 # Clase de PhidgetInterfaceKit 8/8/8 w/6 Port Hub
 # Objeto Phidget cuenta con acciones I/O
 from phidget_simple import SimplePhidget
 
 # Valores corte para humedad, revisar en el lugar
 HUMEDAD_MINIMA = 1.25
-#Evapotranspiracion maxima para riego
+# Evapotranspiracion maxima para riego
 EVAPOTRANSPIRACION_MINIMA = 0.5
 # Variable de evapotranspiracion acumulada
 EVAPOTRANSPIRACION_ACUMULADA = 0
 
 # Variable de ultima fecha y hora de registro de riego
 
-#Variable para evitar riego si ya se realizo hace poco tiempo
+# Variable para evitar riego si ya se realizo hace poco tiempo
 
 
 # Creacion de objeto phidget
@@ -57,12 +58,12 @@ class StateMachine:
                 print(f"Error occurred: {str(e)}")
                 print("Restarting the state machine...")
                 self.state = InitState()  # Reset the state machine to initial state
-                #write a text file with the error and the time
+                # write a text file with the error and the time
                 with open('log/error_log.txt', 'a') as file:
-                    file.write(f"Error occurred: {str(e)} at {call_datetime()[0]}\n")
-                    #close the file
+                    file.write(
+                        f"Error occurred: {str(e)} at {call_datetime()[0]}\n")
+                    # close the file
                     file.close()
-                
 
 
 class State:
@@ -79,20 +80,7 @@ class InitState(State):
 
     def execute(self):
         global year_month_day
-        print("Iniciando sistema de riego.")
-        time.sleep(1)  # Espera de inicializacion
-        init_time = ''
-        print("Llamada a hora local")
-        init_call_time = call_datetime()
-        init_time = init_call_time[0]
-        year_month_day = init_call_time[1]
-        estado_valvula_0 = Phidget.valve0_state
-        estado_valvula_1 = Phidget.valve1_state
-        estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
-        estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
-        # log inicial del estado de sensores y actuadores
-        add_status_log_entry(AAAA_MM_DD=year_month_day, State='Iniciando', tiempo_inicio=init_time, tiempo_actual=init_time, tiempo_termino=init_time,
-                             valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1)
+        init_state_entry()
         # ingreso al estado de espera de riego
         state_machine.set_state(WaitingState())
 
@@ -110,11 +98,12 @@ class WaitingState(State):
         estado_valvula_1 = Phidget.valve1_state
         estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
         estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
+        estado_radiacion = round(Phidget.pyr20_sensor(), 2)
 
         # Si pasan >10min, check -> True
         if check_log_time_variable(get_tiempo_actual_csv(year_month_day)):
             # Si la condicion de humedad se cumple ingresa a estado de riego
-            if (estado_humedad_0 < HUMEDAD_MINIMA and estado_humedad_0>0.0):
+            if (estado_humedad_0 < HUMEDAD_MINIMA and estado_humedad_0 > 0.0):
                 state_machine.set_state(ActiveState())
 
             else:
@@ -122,7 +111,7 @@ class WaitingState(State):
                 actual_time = call_time[0]
                 year_month_day = call_time[1]
                 add_status_log_entry(AAAA_MM_DD=year_month_day, State='EsperandoRiego', tiempo_actual=actual_time, valve0_status=estado_valvula_0,
-                                     valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1)
+                                     valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=estado_radiacion)
 
 
 class ActiveState(State):
@@ -154,8 +143,9 @@ class ActiveState(State):
         estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
         estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
         after_irrigation = call_datetime()[0]
+        estado_radiacion = round(Phidget.pyr20_sensor(), 2)
         add_status_log_entry(AAAA_MM_DD=year_month_day, State='Regando', tiempo_inicio=before_irrigation_time, tiempo_actual=call_datetime()[
-                             0], tiempo_termino=after_irrigation, valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensor_caudal0_value=caudal_0, sensor_caudal1_value=caudal_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1)
+                             0], tiempo_termino=after_irrigation, valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensor_caudal0_value=caudal_0, sensor_caudal1_value=caudal_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=estado_radiacion)
         state_machine.set_state(WaitingState())
 
 

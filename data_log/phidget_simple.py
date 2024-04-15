@@ -10,6 +10,7 @@ dos (2) entradas de voltaje analogo para sensado de humedad de suelo
 dos (2) entradas de voltaje analogo para sensado de caudal
 una (1) entrada de voltaje analogo para sensado de temperatura
 una (1) entrada de voltaje analogo para sensado de velocidad del viento
+una (1) entrada de voltaje analogo para sensado de radiacion solar (0-2V)
 '''
 class SimplePhidget:
     def __init__(self, valve0_state=False, valve1_state=False):
@@ -29,6 +30,7 @@ class SimplePhidget:
         self.flow1 = VoltageInput()
         self.thermopile = VoltageInput()
         self.anemometer = VoltageInput()
+        self.pyr20 = VoltageInput()
         
         #Canal de actuadores
         self.relay_out0.setChannel(0) #Rele 0 en Digital Output 0
@@ -39,6 +41,7 @@ class SimplePhidget:
         self.flow1.setChannel(2) #Sensor de flujo 1 en Analog Input 2
         self.thermopile.setChannel(3) #Piranometro en Analog Input 3
         self.anemometer.setChannel(4) #Anemometro en Analog Input 4
+        self.pyr20.setChannel(5) #Sensor de radiacion solar en Analog Input 5
         self.moist0.setChannel(6) #Sensor humedad en Analog Input 7
         self.moist1.setChannel(7) #Sensor humedad en Analog Input 7
 
@@ -51,6 +54,7 @@ class SimplePhidget:
         self.flow1.openWaitForAttachment(5000)
         self.thermopile.openWaitForAttachment(5000)
         self.anemometer.openWaitForAttachment(5000)
+        self.pyr20.openWaitForAttachment(5000)
 
     def valve_0(self, valve0_state):
         if valve0_state:
@@ -86,6 +90,9 @@ class SimplePhidget:
 
     def anemometer_sensor(self):
         return self.anemometer.getVoltage()
+    
+    def pyr20_sensor(self):
+        return self.pyr20.getVoltage()
 
     def begin(self):
         self.valve_0(False)
@@ -102,3 +109,4 @@ class SimplePhidget:
         self.relay_out1.close()
         self.thermopile.close()
         self.anemometer.close()
+        self.pyr20.close()
