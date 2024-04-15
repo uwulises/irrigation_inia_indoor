@@ -4,7 +4,7 @@ import time
 from time_zone_request import call_datetime, check_log_time_variable
 # Funciones para crear y agregar informacion en .csv y .xlsx
 from logger import add_status_log_entry, get_tiempo_actual_csv
-from agrometer_evap_request import init_state_entry
+#from agrometer_evap_request import init_state_entry
 # Clase de PhidgetInterfaceKit 8/8/8 w/6 Port Hub
 # Objeto Phidget cuenta con acciones I/O
 from phidget_simple import SimplePhidget
