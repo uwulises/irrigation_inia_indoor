@@ -1,4 +1,5 @@
 import serial
+import json
 
 # Define the serial port and baud rate
 ser = serial.Serial('/dev/ttyUSB0', 115200)  # Adjust baud rate according to your Arduino code
@@ -13,6 +14,11 @@ try:
             #take the last value of the list
             print("Humedad",data[-2])
             print("Temperatura °F",data[-1])
+        #save data as json, or edit the file
+        with open('data.json', 'w') as f:
+            json.dump(data, f)
+        #close the file
+        f.close()
         line = ""
         
 except KeyboardInterrupt:
