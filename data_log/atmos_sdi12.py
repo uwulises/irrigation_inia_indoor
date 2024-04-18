@@ -9,7 +9,11 @@ try:
         line = ser.readline().decode().strip()
         # Print the received line
         print(line.split(","))
-        
+        #wait for this message ['-------------------------------------------------------------------------------']
+        if len(line.split(",")) == 9:
+            #take the last value of the list
+            print("Humedad",line.split(",")[-2])
+            print("Temperatura °F",line.split(",")[-1])
         line = ""
         
 except KeyboardInterrupt:
