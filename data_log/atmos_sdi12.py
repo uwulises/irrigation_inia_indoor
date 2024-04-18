@@ -15,8 +15,8 @@ try:
         #if len is more than 70, then it is a valid message
         if len(line) > 70:
             #take the last two values as float
-            print(float(line.split(",")[-2]))
-            print(float(line.split(",")[-1]))
+            print(line.split(",")[-2])
+            print(line.split(",")[-1])
             # You can add your own processing logic here
         line = ""
         
