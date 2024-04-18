@@ -14,9 +14,10 @@ try:
             #take the last value of the list
             print("Humedad",data[-2])
             print("Temperatura °F",data[-1])
+            registro={"Humedad":data[-2],"Temperatura":data[-1]}
             #save data as json, or edit the file
             with open('data.json', 'w') as f:
-                json.dump(data, f)
+                json.dump(registro, f)
             #close the file
             f.close()
         data = ""
