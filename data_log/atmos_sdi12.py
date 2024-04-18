@@ -10,6 +10,7 @@ try:
         
         # Print the received line
         print("Received:", line)
+        print("largo mensaje: ", len(line))
         
         # You can add your own processing logic here
         
