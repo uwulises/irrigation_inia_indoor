@@ -7,13 +7,12 @@ try:
     while True:
         # Read a line from the serial port
         line = ser.readline().decode().strip()
-        # Print the received line
-        print(line.split(","))
+        data = line.split(",")
         #wait for this message ['-------------------------------------------------------------------------------']
-        if len(line.split(",")) == 9:
+        if len(data) == 9:
             #take the last value of the list
-            print("Humedad",line.split(",")[-2])
-            print("Temperatura °F",line.split(",")[-1])
+            print("Humedad",data[-2])
+            print("Temperatura °F",data[-1])
         line = ""
         
 except KeyboardInterrupt:
