@@ -92,9 +92,16 @@ class InitState(State):
         estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
         estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
         radiation = round(Phidget.pyr20_sensor(), 2)
+        #load json data.json to get humedad y temperatura
+        #{"Humedad":data[-2],"Temperatura":data[-1]}
+        with open('data.json') as json_file:
+            data = json.load(json_file)
+            humedad = data["Humedad"]
+            temperatura = data["Temperatura"]
+        json_file.close()
         # log inicial del estado de sensores y actuadores
         add_status_log_entry(AAAA_MM_DD=year_month_day, State='Iniciando', tiempo_inicio=init_time, tiempo_actual=init_time, tiempo_termino=init_time,
-                            valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=radiation, evapo_t_acum=EVAPOTRANSPIRACION_ACUMULADA)
+                            valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=radiation, evapo_t_acum=EVAPOTRANSPIRACION_ACUMULADA, humedad=humedad, temperatura=temperatura)
 
         # ingreso al estado de espera de riego
         state_machine.set_state(WaitingState())
@@ -114,6 +121,13 @@ class WaitingState(State):
         estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
         estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
         estado_radiacion = round(Phidget.pyr20_sensor(), 2)
+        #load json data.json to get humedad y temperatura
+        #{"Humedad":data[-2],"Temperatura":data[-1]}
+        with open('data.json') as json_file:
+            data = json.load(json_file)
+            humedad = data["Humedad"]
+            temperatura = data["Temperatura"]
+        json_file.close()
 
         # Si pasan >10min, check -> True
         if check_log_time_variable(get_tiempo_actual_csv(year_month_day)):
@@ -126,7 +140,7 @@ class WaitingState(State):
                 actual_time = call_time[0]
                 year_month_day = call_time[1]
                 add_status_log_entry(AAAA_MM_DD=year_month_day, State='EsperandoRiego', tiempo_actual=actual_time, valve0_status=estado_valvula_0,
-                                     valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=estado_radiacion)
+                                     valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=estado_radiacion, humedad=humedad, temperatura=temperatura)
 
 
 class ActiveState(State):
