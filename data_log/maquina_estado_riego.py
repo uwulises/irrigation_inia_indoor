@@ -8,7 +8,7 @@ from logger import add_status_log_entry, get_tiempo_actual_csv
 # Clase de PhidgetInterfaceKit 8/8/8 w/6 Port Hub
 # Objeto Phidget cuenta con acciones I/O
 from phidget_simple import SimplePhidget
-
+import json
 # Valores corte para humedad, revisar en el lugar
 HUMEDAD_MINIMA = 0.1
 # Evapotranspiracion maxima para riego
