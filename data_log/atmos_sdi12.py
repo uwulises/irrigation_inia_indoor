@@ -14,12 +14,12 @@ try:
             #take the last value of the list
             print("Humedad",data[-2])
             print("Temperatura °F",data[-1])
-        #save data as json, or edit the file
-        with open('data.json', 'w') as f:
-            json.dump(data, f)
-        #close the file
-        f.close()
-        line = ""
+            #save data as json, or edit the file
+            with open('data.json', 'w') as f:
+                json.dump(data, f)
+            #close the file
+            f.close()
+        data = ""
         
 except KeyboardInterrupt:
     # If user interrupts, close the serial port
