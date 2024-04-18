@@ -10,7 +10,7 @@ from logger import add_status_log_entry, get_tiempo_actual_csv
 from phidget_simple import SimplePhidget
 
 # Valores corte para humedad, revisar en el lugar
-HUMEDAD_MINIMA = 1.25
+HUMEDAD_MINIMA = 0.1
 # Evapotranspiracion maxima para riego
 EVAPOTRANSPIRACION_MINIMA = 0.5
 # Variable de evapotranspiracion acumulada

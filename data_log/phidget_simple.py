@@ -42,7 +42,7 @@ class SimplePhidget:
         self.thermopile.setChannel(3) #Piranometro en Analog Input 3
         self.anemometer.setChannel(4) #Anemometro en Analog Input 4
         self.pyr20.setChannel(5) #Sensor de radiacion solar en Analog Input 5
-        self.moist0.setChannel(6) #Sensor humedad en Analog Input 7
+        self.moist0.setChannel(6) #Sensor humedad en Analog Input 6
         self.moist1.setChannel(7) #Sensor humedad en Analog Input 7
 
         #Open your Phidgets and wait for attachment
