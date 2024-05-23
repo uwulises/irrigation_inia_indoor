@@ -37,8 +37,8 @@ class SimplePhidget:
         self.relay_out1.setChannel(1) #Rele 1 en Digital Output 1
 
         #Canal de sensores            
-        self.flow0.setChannel(1) #Sensor de flujo 0 en Analog Input 1
-        self.flow1.setChannel(2) #Sensor de flujo 1 en Analog Input 2
+        self.flow0.setChannel(0) #Sensor de flujo 0 en Analog Input 0
+        self.flow1.setChannel(1) #Sensor de flujo 1 en Analog Input 1
         self.thermopile.setChannel(3) #Piranometro en Analog Input 3
         self.anemometer.setChannel(4) #Anemometro en Analog Input 4
         self.pyr20.setChannel(5) #Sensor de radiacion solar en Analog Input 5
