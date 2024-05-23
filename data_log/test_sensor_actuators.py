@@ -7,6 +7,7 @@ def main():
     Phidget.begin()
     print("Abriendo valvulas")    
     Phidget.valve_1(True)
+    time.sleep(0.)
     Phidget.valve_0(True)
     time.sleep(2)
     i=0
