@@ -98,10 +98,16 @@ class InitState(State):
             data = json.load(json_file)
             humedad = data["Humedad"]
             temperatura = data["Temperatura"]
+
+        with open('lisimetro.json') as json2_file:
+            lisimetro_meas = json.load(json2_file)
+            suma_total=lisimetro_meas["Peso total"]
+            
         json_file.close()
+        json2_file.close()
         # log inicial del estado de sensores y actuadores
         add_status_log_entry(AAAA_MM_DD=year_month_day, State='Iniciando', tiempo_inicio=init_time, tiempo_actual=init_time, tiempo_termino=init_time,
-                            valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=radiation, evapo_t_acum=EVAPOTRANSPIRACION_ACUMULADA, humedad=humedad, temperatura=temperatura)
+                            valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=radiation, evapo_t_acum=EVAPOTRANSPIRACION_ACUMULADA, humedad=humedad, temperatura=temperatura, lisimetro=suma_total)
 
         # ingreso al estado de espera de riego
         state_machine.set_state(WaitingState())
@@ -121,13 +127,15 @@ class WaitingState(State):
         estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
         estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
         estado_radiacion = round(Phidget.pyr20_sensor(), 2)
-        #load json data.json to get humedad y temperatura
-        #{"Humedad":data[-2],"Temperatura":data[-1]}
         with open('data.json') as json_file:
             data = json.load(json_file)
             humedad = data["Humedad"]
             temperatura = data["Temperatura"]
         json_file.close()
+        with open('lisimetro.json') as json2_file:
+            lisimetro_meas = json.load(json2_file)
+            suma_total=lisimetro_meas["Peso total"]
+        json2_file.close()
 
         # Si pasan >10min, check -> True
         if check_log_time_variable(get_tiempo_actual_csv(year_month_day)):
@@ -140,7 +148,7 @@ class WaitingState(State):
                 actual_time = call_time[0]
                 year_month_day = call_time[1]
                 add_status_log_entry(AAAA_MM_DD=year_month_day, State='EsperandoRiego', tiempo_actual=actual_time, valve0_status=estado_valvula_0,
-                                     valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=estado_radiacion, humedad=humedad, temperatura=temperatura)
+                                     valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=estado_radiacion, humedad=humedad, temperatura=temperatura,lisimetro=suma_total)
 
 
 class ActiveState(State):
@@ -160,6 +168,10 @@ class ActiveState(State):
 
             Phidget.valve_1(True)
             Phidget.valve_0(True)
+            #calculate the total water added in 30 seconds by the flow sensor
+            caudal_0 = round(Phidget.flow_0(), 2)
+            caudal_1 = round(Phidget.flow_1(), 2)
+
 
         print("Finalizando riego")
         estado_valvula_0 = Phidget.valve0_state
@@ -167,8 +179,8 @@ class ActiveState(State):
 
         Phidget.valve_1(False)
         Phidget.valve_0(False)
-        caudal_0 = round(Phidget.flow_0(), 2)
-        caudal_1 = round(Phidget.flow_1(), 2)
+        # caudal_0 = round(Phidget.flow_0(), 2)
+        # caudal_1 = round(Phidget.flow_1(), 2)
         estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
         estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
         after_irrigation = call_datetime()[0]
