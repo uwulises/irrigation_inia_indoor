@@ -2,7 +2,7 @@ from ..serial.serial_control import SerialControl
 import time
 import json
 # Create an instance of the SerialControl class
-load_cell = SerialControl(port="/dev/ttyUSB1", baudrate=115200)
+load_cell = SerialControl(port="/dev/ttyUSB1", baudrate=9600)
 
 # Open the serial port
 load_cell.open_serial()
