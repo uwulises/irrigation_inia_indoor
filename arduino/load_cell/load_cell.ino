@@ -48,12 +48,32 @@ void calib()
     celda4.tare();
 }
 
+
+void raw_measure(){
+    valor1 = celda1.get_value(10);
+    valor2 = celda2.get_value(10);
+    valor3 = celda3.get_value(10);
+    valor4 = celda4.get_value(10);
+    suma = valor1 + valor2 + valor3 + valor4;
+    Serial.print("RAWSumaV1V2V3V4");
+    Serial.print(",");
+    Serial.print(suma);
+    Serial.print(",");
+    Serial.print(valor1);
+    Serial.print(",");
+    Serial.print(valor2);
+    Serial.print(",");
+    Serial.print(valor3);
+    Serial.print(",");
+    Serial.println(valor4);
+}
+
 void take_measure()
 {
-    valor1 = celda1.get_units(20);
-    valor2 = celda2.get_units(20);
-    valor3 = celda3.get_units(20);
-    valor4 = celda4.get_units(20);
+    valor1 = celda1.get_units(10);
+    valor2 = celda2.get_units(10);
+    valor3 = celda3.get_units(10);
+    valor4 = celda4.get_units(10);
     suma = valor1 + valor2 + valor3 + valor4;
     Serial.print("SumaV1V2V3V4");
     Serial.print(",");
@@ -72,16 +92,17 @@ void setup()
 {
     Serial.begin(9600);
     celda1.begin(DT1, SCK1);
-    celda1.set_average_mode();
+    celda1.set_median_mode();
     celda1.set_scale(205.3);
+    //100g -> 
     celda2.begin(DT2, SCK2);
-    celda2.set_average_mode();
+    celda2.set_median_mode();
     celda2.set_scale(208.1);
     celda3.begin(DT3, SCK3);
-    celda3.set_average_mode();
+    celda3.set_median_mode();
     celda3.set_scale(212);
     celda4.begin(DT4, SCK4);
-    celda4.set_average_mode();
+    celda4.set_median_mode();
     celda4.set_scale(206.7);
     delay(1000);
 }
@@ -96,8 +117,12 @@ void loop()
             take_measure();
         }
         if (inputString == "CALIB\n")
-        {
+        {   Serial.println("TARE TO ZERO");
             calib();
+        }
+        if (inputString == "RAW\n")
+        {
+            raw_measure();
         }
         inputString = "";
         stringComplete = false;

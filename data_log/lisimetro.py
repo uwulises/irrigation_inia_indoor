@@ -1,7 +1,7 @@
 import os
 import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
-from serial.serial_control import SerialControl
+from serial_control import SerialControl
 import time
 import json
 # Create an instance of the SerialControl class
