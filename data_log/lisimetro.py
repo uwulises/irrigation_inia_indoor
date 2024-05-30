@@ -1,4 +1,7 @@
-from ..serial.serial_control import SerialControl
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+from serial.serial_control import SerialControl
 import time
 import json
 # Create an instance of the SerialControl class
@@ -10,6 +13,7 @@ load_cell.open_serial()
 try:
     while True:
         load_cell.send_command("MEAS\n")
+        time.sleep(5)
         # Read a line from the serial port
         line = load_cell.readline().decode().strip()
         msg = line.split(",")
