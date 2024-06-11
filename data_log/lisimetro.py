@@ -17,7 +17,7 @@ try:
         # Read a line from the serial port
         #Decode this line and take each value [b'SumaV1V2V3V4,19347.48,6381.76,5840.10,3131.46,3994.16\r\n']
         msg = load_cell.read()
-        
+        print(msg)
         if len(msg) == 6:
             #decode
             msg = msg.decode("utf-8")
