@@ -17,6 +17,8 @@ try:
         # Read a line from the serial port
         line = load_cell.read()
         msg = line.split(",")
+        print(msg)
+        print("len: ",len(msg))
         measure = {"Peso total":msg[1],"valor1":msg[2],"valor2":msg[3],"valor3":msg[4],"valor4":msg[5]}
         #save data message as json, or edit the file
         with open('lisimetro.json', 'w') as f:
