@@ -23,7 +23,7 @@ class SerialControl:
         time.sleep(0.2)
         self.serial.close()
     def read(self):
-        return self.serial.readlines().decode().strip()
+        return self.serial.readlines()
 
     # Send a command to the Arduino
     def send_command(self, cmd=""):
