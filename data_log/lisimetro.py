@@ -19,15 +19,16 @@ try:
         msg = line.split(",")
         print(msg)
         print("len: ",len(msg))
-        measure = {"Peso total":msg[1],"valor1":msg[2],"valor2":msg[3],"valor3":msg[4],"valor4":msg[5]}
-        #save data message as json, or edit the file
-        with open('lisimetro.json', 'w') as f:
-            json.dump(measure, f)
-        #close the file
-        f.close()
-        print(msg)
-        msg = ""
-        time.sleep(60)
+        if len(msg) == 5:
+            measure = {"Peso total":msg[1],"valor1":msg[2],"valor2":msg[3],"valor3":msg[4],"valor4":msg[5]}
+            #save data message as json, or edit the file
+            with open('lisimetro.json', 'w') as f:
+                json.dump(measure, f)
+            #close the file
+            f.close()
+            print(msg)
+            msg = ""
+            time.sleep(60)
         
 except KeyboardInterrupt:
     # If user interrupts, close the serial port
