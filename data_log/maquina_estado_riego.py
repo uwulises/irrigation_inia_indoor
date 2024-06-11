@@ -1,3 +1,6 @@
+import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), "/log"))
 # Importacion de request para conteo de tiempo/fecha
 # Time zone request worldtime api
 import time
