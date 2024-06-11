@@ -15,7 +15,7 @@ try:
         load_cell.send_command("MEAS\n")
         time.sleep(20)
         # Read a line from the serial port
-        line = load_cell.read()
+        line = load_cell.readline()
         msg = line.split(",")
         print(msg)
         print("len: ",len(msg))
