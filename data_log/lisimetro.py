@@ -12,19 +12,17 @@ load_cell.open_serial()
 
 try:
     while True:
-        load_cell.send_command("MEAS\n")
-        time.sleep(5)
         # Read a line from the serial port
-        line = load_cell.read()
-        msg = line.split(",")
-        measure = {"Peso total":msg[0],"valor1":msg[1],"valor2":msg[2],"valor3":msg[3],"valor4":msg[4]}
+        peso = load_cell.read_lisimetro()
+        measure = {"Peso total":peso}
         #save data message as json, or edit the file
         with open('lisimetro.json', 'w') as f:
             json.dump(measure, f)
         #close the file
         f.close()
-        print(msg)
-        msg = ""
+        print(peso)
+        peso = ""
+        measure = ""
         time.sleep(60)
         
 except KeyboardInterrupt:

@@ -22,8 +22,12 @@ class SerialControl:
     def close_serial(self):
         time.sleep(0.2)
         self.serial.close()
-    def read(self):
-        return self.serial.readline().decode().strip()
+    def read_lisimetro(self):
+        message = self.serial.readline()
+        print(message)
+        if b'PESO' in message:
+            value = int(message.split(b',')[1].strip())
+        return value
 
     # Send a command to the Arduino
     def send_command(self, cmd=""):
