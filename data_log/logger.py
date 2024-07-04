@@ -23,7 +23,7 @@ def add_status_log_entry(AAAA_MM_DD='2023-00-00', State='', tiempo_inicio='', ti
     # Save the DataFrame to the CSV file
     datalog.to_csv(
         'log/invernadero_log_csv_{}.csv'.format(AAAA_MM_DD), index=False)
-    datalog.to_excel('log/invernadero_log_excel_{}.xlsx'.format(AAAA_MM_DD))
+    #datalog.to_excel('log/invernadero_log_excel_{}.xlsx'.format(AAAA_MM_DD))
 
     # clean new entry with empty dataframe
     new_entry = None
