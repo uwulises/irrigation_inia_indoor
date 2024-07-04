@@ -12,8 +12,8 @@ try:
         #wait for this message ['-------------------------------------------------------------------------------']
         if len(data) == 9:
             #take the last value of the list
-            print("Humedad",data[-2])
-            print("Temperatura °F",data[-1])
+            #print("Humedad",data[-2])
+            #print("Temperatura °F",data[-1])
             registro={"Humedad":data[-2],"Temperatura":data[-1]}
             #save data as json, or edit the file
             with open('data.json', 'w') as f:
