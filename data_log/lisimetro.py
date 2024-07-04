@@ -14,13 +14,14 @@ try:
     while True:
         # Read a line from the serial port
         peso = load_cell.read_lisimetro()
-        measure = {"Peso total":peso}
-        #save data message as json, or edit the file
-        with open('lisimetro.json', 'w') as f:
-            json.dump(measure, f)
-        #close the file
-        f.close()
-        print(peso)
+        if peso > 0:
+            measure = {"Peso total":peso}
+            #save data message as json, or edit the file
+            with open('lisimetro.json', 'w') as f:
+                json.dump(measure, f)
+            #close the file
+            f.close()
+            print(peso)
         peso = ""
         measure = ""
         time.sleep(60)

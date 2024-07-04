@@ -25,7 +25,7 @@ class SerialControl:
     def read_lisimetro(self):
         message = self.serial.readline()
         value=0
-        print(message)
+        #print(message)
         if b'PESO' in message:
             value = int(message.split(b',')[1].strip())
         return value
