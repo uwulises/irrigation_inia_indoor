@@ -16,7 +16,7 @@ try:
             #print("Temperatura °F",data[-1])
             registro={"Humedad":data[-2],"Temperatura":data[-1]}
             #save data as json, or edit the file
-            with open('data.json', 'w') as f:
+            with open('atmos.json', 'w') as f:
                 json.dump(registro, f)
             #close the file
             f.close()
