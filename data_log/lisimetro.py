@@ -24,7 +24,7 @@ try:
             print(peso)
         peso = ""
         measure = ""
-        time.sleep(60)
+        time.sleep(5)
         
 except KeyboardInterrupt:
     # If user interrupts, close the serial port
