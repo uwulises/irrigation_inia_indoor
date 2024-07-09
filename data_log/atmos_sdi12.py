@@ -11,7 +11,7 @@ try:
         data = line.split(",")
         if len(data) == 9:
             humedad = round(float(data[-2]),2)
-            temperatura = (round(float(data[-1]),2)-32)*5/9
+            temperatura = round((float(data[-1])-32)/1.8,2)
             registro={"Humedad":humedad,"Temperatura":temperatura}
             #save data as json, or edit the file
             with open('atmos.json', 'w') as f:
