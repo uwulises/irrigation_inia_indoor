@@ -9,12 +9,10 @@ try:
         # Read a line from the serial port
         line = ser.readline().decode().strip()
         data = line.split(",")
-        #wait for this message ['-------------------------------------------------------------------------------']
         if len(data) == 9:
-            #take the last value of the list
-            #print("Humedad",data[-2])
-            #print("Temperatura °F",data[-1])
-            registro={"Humedad":data[-2],"Temperatura":data[-1]}
+            humedad = round(float(data[-2]),2)
+            temperatura = (round(float(data[-1]),2)-32)*5/9
+            registro={"Humedad":humedad,"Temperatura":temperatura}
             #save data as json, or edit the file
             with open('atmos.json', 'w') as f:
                 json.dump(registro, f)
