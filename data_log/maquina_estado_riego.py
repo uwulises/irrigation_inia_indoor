@@ -94,7 +94,7 @@ class InitState(State):
         radiation = round(Phidget.pyr20_sensor(), 2)
         #load json data.json to get humedad y temperatura
         #{"Humedad":data[-2],"Temperatura":data[-1]}
-        with open('data.json') as json_file:
+        with open('atmos.json') as json_file:
             data = json.load(json_file)
             humedad = data["Humedad"]
             temperatura = data["Temperatura"]
@@ -127,7 +127,7 @@ class WaitingState(State):
         estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
         estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
         estado_radiacion = round(Phidget.pyr20_sensor(), 2)
-        with open('data.json') as json_file:
+        with open('atmos.json') as json_file:
             data = json.load(json_file)
             humedad = data["Humedad"]
             temperatura = data["Temperatura"]
