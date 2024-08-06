@@ -57,7 +57,7 @@ def add_entry(AAAA_MM_DD='2023-00-00', State='', tiempo_inicio='', tiempo_actual
     
     data_load.append(data)
     with open('log/invernadero_log.json', 'w') as dumpfile:
-        json.dump(data_load, dumpfile, indent=15)
+        json.dump(data_load, dumpfile, indent=4)
     
     
 
