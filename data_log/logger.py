@@ -11,19 +11,19 @@ def add_status_log_entry(AAAA_MM_DD='2023-00-00', State='', tiempo_inicio='', ti
     except FileNotFoundError:
         # Create a new DataFrame if the file doesn't exist
         datalog = pd.DataFrame(columns=['State', 'Initial Time', 'Tiempo Actual', 'Final Time', 'valve0_status',
-                               'valve1_status', 'Sensor caudal 0', 'Sensor caudal 1', 'Sensor humedad 0', 'Sensor humedad 1', 'Radiación [V]', 'Evapotranspiracion acumulada', 'Humedad', 'Temperatura °F', 'Lisimetro'])
+                               'valve1_status', 'Sensor caudal 0', 'Sensor caudal 1', 'Sensor humedad 0', 'Sensor humedad 1', 'Radiación [V]', 'Evapotranspiracion acumulada', 'Humedad', 'Temperatura °C', 'Lisimetro'])
 
     # Create a new row with the status log entry
     new_entry = pd.DataFrame(
         [{'State': State, 'Initial Time': tiempo_inicio, 'Tiempo Actual': tiempo_actual, 'Final Time': tiempo_termino, 'valve0_status': valve0_status, 'valve1_status': valve1_status, 'Sensor caudal 0': sensor_caudal0_value, 'Sensor caudal 1': sensor_caudal1_value,
-          'Sensor humedad 0': sensormoist0_value, 'Sensor humedad 1': sensormoist1_value, 'Radiación [V]': radiation_voltage, 'Evapotranspiracion acumulada': evapo_t_acum, 'Humedad': humedad, 'Temperatura °F': temperatura, 'Lisimetro': lisimetro}])
+          'Sensor humedad 0': sensormoist0_value, 'Sensor humedad 1': sensormoist1_value, 'Radiación [V]': radiation_voltage, 'Evapotranspiracion acumulada': evapo_t_acum, 'Humedad': humedad, 'Temperatura °C': temperatura, 'Lisimetro': lisimetro}])
 
     # Append the new row to the DataFrame
     datalog = pd.concat([datalog, new_entry], ignore_index=True)
     # Save the DataFrame to the CSV file
     datalog.to_csv(
         'log/invernadero_log_csv_{}.csv'.format(AAAA_MM_DD), index=False)
-    datalog.to_excel('log/invernadero_log_excel_{}.xlsx'.format(AAAA_MM_DD))
+    #datalog.to_excel('log/invernadero_log_excel_{}.xlsx'.format(AAAA_MM_DD))
 
     # clean new entry with empty dataframe
     new_entry = None
@@ -36,7 +36,7 @@ def get_tiempo_actual_csv(AAAA_MM_DD='2024-00-00'):
     except FileNotFoundError:
         # Create a new DataFrame if the file doesn't exist
         log = pd.DataFrame(columns=['State', 'Initial Time', 'Tiempo Actual', 'Final Time', 'valve0_status',
-                                    'valve1_status', 'Sensor caudal 0', 'Sensor caudal 1', 'Sensor humedad 0', 'Sensor humedad 1', 'Radiación [V]', 'Evapotranspiracion acumulada', 'Humedad', 'Temperatura °F', 'Lisimetro'])
+                                    'valve1_status', 'Sensor caudal 0', 'Sensor caudal 1', 'Sensor humedad 0', 'Sensor humedad 1', 'Radiación [V]', 'Evapotranspiracion acumulada', 'Humedad', 'Temperatura °C', 'Lisimetro'])
 
     last_tiempo_actual = log['Tiempo Actual'].iloc[-1]
     log = None

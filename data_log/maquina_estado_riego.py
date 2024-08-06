@@ -61,12 +61,12 @@ class StateMachine:
                 print(f"Error occurred: {str(e)}")
                 print("Restarting the state machine...")
                 self.state = InitState()  # Reset the state machine to initial state
-                # write a text file with the error and the time
-                with open('log/error_log.txt', 'a') as file:
-                    file.write(
-                        f"Error occurred: {str(e)} at {call_datetime()[0]}\n")
-                    # close the file
-                    file.close()
+                # # write a text file with the error and the time
+                # with open('log/error_log.txt', 'a') as file:
+                #     file.write(
+                #         f"Error occurred: {str(e)} at {call_datetime()[0]}\n")
+                #     # close the file
+                #     file.close()
 
 
 class State:
@@ -97,7 +97,7 @@ class InitState(State):
         radiation = round(Phidget.pyr20_sensor(), 2)
         #load json data.json to get humedad y temperatura
         #{"Humedad":data[-2],"Temperatura":data[-1]}
-        with open('data.json') as json_file:
+        with open('atmos.json') as json_file:
             data = json.load(json_file)
             humedad = data["Humedad"]
             temperatura = data["Temperatura"]
@@ -130,7 +130,7 @@ class WaitingState(State):
         estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
         estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
         estado_radiacion = round(Phidget.pyr20_sensor(), 2)
-        with open('data.json') as json_file:
+        with open('atmos.json') as json_file:
             data = json.load(json_file)
             humedad = data["Humedad"]
             temperatura = data["Temperatura"]
