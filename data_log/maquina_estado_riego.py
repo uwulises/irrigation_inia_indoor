@@ -18,7 +18,7 @@ HUMEDAD_MINIMA = 0.1
 EVAPOTRANSPIRACION_MINIMA = 0.5
 # Variable de evapotranspiracion acumulada
 EVAPOTRANSPIRACION_ACUMULADA = 0
-TIEMPO_RIEGO = 420 #segundos
+TIEMPO_RIEGO = 310 #segundos
 # Variable de ultima fecha y hora de registro de riego
 
 # Variable para evitar riego si ya se realizo hace poco tiempo
@@ -175,16 +175,11 @@ class ActiveState(State):
         year_month_day = call_time[1]
         timer = time.time()
         Phidget.begin() # Inicializacion de phidget
+        #metodo para valvula 0 (por calendario)
         while (time.time() - timer < TIEMPO_RIEGO):
-
-            Phidget.valve_1(True)
-            time.sleep(0.5)
             Phidget.valve_0(True)
             #calculate the total water added in 30 seconds by the flow sensor
             caudal_0 = round(Phidget.flow_0(), 3)
-            caudal_1 = round(Phidget.flow_1(), 3)
-
-
         print("Finalizando riego")
         estado_valvula_0 = Phidget.valve0_state
         estado_valvula_1 = Phidget.valve1_state
