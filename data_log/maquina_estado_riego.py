@@ -58,7 +58,7 @@ class StateMachine:
                     time.sleep(10)
             except Exception as e:
                 print(f"Error occurred: {str(e)}")
-                print("Restarting the state machine...")
+                #print("Restarting the state machine...")
                 self.state = InitState()  # Reset the state machine to initial state
                 # # write a text file with the error and the time
                 # with open('log/error_log.txt', 'a') as file:
@@ -85,7 +85,7 @@ class InitState(State):
         print("Iniciando sistema de riego.")
         time.sleep(1)  # Espera de inicializacion
         init_time = ''
-        print("Llamada a hora local")
+        #print("Llamada a hora local")
         init_call_time = call_datetime()
         init_time = init_call_time[0]
         year_month_day = init_call_time[1]
@@ -124,7 +124,7 @@ class WaitingState(State):
 
     def execute(self):
         global year_month_day
-        print("Esperando para regar, por evapotranspiracion o humedad")
+        #print("Esperando para regar, por evapotranspiracion o humedad")
         # Revisa cada 60seg el estado de los sensores de humedad
         time.sleep(60)
         # Si pasan >10min, check -> True

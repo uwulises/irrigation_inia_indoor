@@ -65,7 +65,7 @@ def get_actual_time():
     with open('log/invernadero_log.json', 'r') as loadfile:
         data_log = json.load(loadfile)
     last_tiempo_actual = data_log[-1]['Tiempo Actual']
-    print(last_tiempo_actual)
+    #print(last_tiempo_actual)
     return last_tiempo_actual
 
 

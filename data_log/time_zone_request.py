@@ -18,7 +18,7 @@ def call_datetime():
     hour = time_object.hour
     minute = time_object.minute
     second = time_object.second
-    print("Fecha: ", AAAA_MM_DD, "Hora: ", hour, ":", minute)
+    #print("Fecha: ", AAAA_MM_DD, "Hora: ", hour, ":", minute)
 
     return current_time, AAAA_MM_DD,"T{}:{}:{}".format(hour, minute, second), hour, minute, second
 
@@ -33,7 +33,7 @@ def check_log_time_variable(previous_datetime):
 
     if time_diff >= 10:
         # Toggle the boolean variable
-        print("Han pasado 10min desde el ultimo registro de datos")
+        #print("Han pasado 10min desde el ultimo registro de datos")
         return True
     
     return False
@@ -42,7 +42,7 @@ def check_irrigation_time():
     current_datetime = call_datetime()[0]
     current_datetime = datetime.fromisoformat(current_datetime)
 
-    with open('data_log/irrigation_time.json', 'r') as file:
+    with open('irrigation_time.json', 'r') as file:
         data = json.load(file)
     
     # Extract the day and time from the data
