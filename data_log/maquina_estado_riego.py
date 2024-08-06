@@ -4,7 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "/log"))
 # Importacion de request para conteo de tiempo/fecha
 # Time zone request worldtime api
 import time
-from time_zone_request import call_datetime, check_log_time_variable
+from time_zone_request import call_datetime, check_log_time_variable, check_irrigation_time
 # Funciones para crear y agregar informacion en .csv y .xlsx
 from logger import add_status_log_entry, get_tiempo_actual_csv, add_entry, get_actual_time
 #from agrometer_evap_request import init_state_entry
@@ -18,7 +18,7 @@ HUMEDAD_MINIMA = 0.1
 EVAPOTRANSPIRACION_MINIMA = 0.5
 # Variable de evapotranspiracion acumulada
 EVAPOTRANSPIRACION_ACUMULADA = 0
-
+TIEMPO_RIEGO = 420 #segundos
 # Variable de ultima fecha y hora de registro de riego
 
 # Variable para evitar riego si ya se realizo hace poco tiempo
@@ -149,6 +149,9 @@ class WaitingState(State):
             # Si la condicion de humedad se cumple ingresa a estado de riego
             if (estado_humedad_0 < HUMEDAD_MINIMA and estado_humedad_0 > 0.0):
                 state_machine.set_state(ActiveState())
+            
+            elif check_irrigation_time():
+                state_machine.set_state(ActiveState())
 
             else:
                 call_time = call_datetime()
@@ -172,7 +175,7 @@ class ActiveState(State):
         year_month_day = call_time[1]
         timer = time.time()
         Phidget.begin() # Inicializacion de phidget
-        while (time.time() - timer < 30.0):
+        while (time.time() - timer < TIEMPO_RIEGO):
 
             Phidget.valve_1(True)
             Phidget.valve_0(True)
