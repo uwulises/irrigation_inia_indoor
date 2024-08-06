@@ -178,6 +178,7 @@ class ActiveState(State):
         while (time.time() - timer < TIEMPO_RIEGO):
 
             Phidget.valve_1(True)
+            time.sleep(0.5)
             Phidget.valve_0(True)
             #calculate the total water added in 30 seconds by the flow sensor
             caudal_0 = round(Phidget.flow_0(), 3)
