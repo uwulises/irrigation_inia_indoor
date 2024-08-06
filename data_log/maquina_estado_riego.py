@@ -154,9 +154,10 @@ class WaitingState(State):
                 call_time = call_datetime()
                 actual_time = call_time[0]
                 year_month_day = call_time[1]
-                add_status_log_entry(AAAA_MM_DD=year_month_day, State='EsperandoRiego', tiempo_actual=actual_time, valve0_status=estado_valvula_0,
+                #add_status_log_entry(AAAA_MM_DD=year_month_day, State='EsperandoRiego', tiempo_actual=actual_time, valve0_status=estado_valvula_0,
+                 #                    valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=estado_radiacion, humedad=humedad, temperatura=temperatura,lisimetro=suma_total)
+                add_entry(AAAA_MM_DD=year_month_day, State='EsperandoRiego', tiempo_actual=actual_time, valve0_status=estado_valvula_0,
                                      valve1_status=estado_valvula_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=estado_radiacion, humedad=humedad, temperatura=temperatura,lisimetro=suma_total)
-
 
 class ActiveState(State):
     def __init__(self):
@@ -193,7 +194,9 @@ class ActiveState(State):
         after_irrigation = call_datetime()[0]
         estado_radiacion = round(Phidget.pyr20_sensor(), 2)
         Phidget.stop()
-        add_status_log_entry(AAAA_MM_DD=year_month_day, State='Regando', tiempo_inicio=before_irrigation_time, tiempo_actual=call_datetime()[
+        #add_status_log_entry(AAAA_MM_DD=year_month_day, State='Regando', tiempo_inicio=before_irrigation_time, tiempo_actual=call_datetime()[
+        #                     0], tiempo_termino=after_irrigation, valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensor_caudal0_value=caudal_0, sensor_caudal1_value=caudal_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=estado_radiacion)
+        add_entry(AAAA_MM_DD=year_month_day, State='Regando', tiempo_inicio=before_irrigation_time, tiempo_actual=call_datetime()[
                              0], tiempo_termino=after_irrigation, valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensor_caudal0_value=caudal_0, sensor_caudal1_value=caudal_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=estado_radiacion)
         state_machine.set_state(WaitingState())
 
