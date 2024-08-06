@@ -92,8 +92,8 @@ class InitState(State):
         Phidget.begin() # Inicializacion de phidget
         estado_valvula_0 = Phidget.valve0_state
         estado_valvula_1 = Phidget.valve1_state
-        estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
-        estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
+        estado_humedad_0 = round(Phidget.moist_sensor0(), 3)
+        estado_humedad_1 = round(Phidget.moist_sensor1(), 3)
         radiation = round(Phidget.pyr20_sensor(), 2)
         #load json data.json to get humedad y temperatura
         #{"Humedad":data[-2],"Temperatura":data[-1]}
@@ -133,9 +133,9 @@ class WaitingState(State):
             Phidget.begin()
             estado_valvula_0 = Phidget.valve0_state
             estado_valvula_1 = Phidget.valve1_state
-            estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
-            estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
-            estado_radiacion = round(Phidget.pyr20_sensor(), 2)
+            estado_humedad_0 = round(Phidget.moist_sensor0(), 3)
+            estado_humedad_1 = round(Phidget.moist_sensor1(), 3)
+            estado_radiacion = round(Phidget.pyr20_sensor(), 3)
             with open('atmos.json') as json_file:
                 data = json.load(json_file)
                 humedad = data["Humedad"]
@@ -180,8 +180,8 @@ class ActiveState(State):
             Phidget.valve_1(True)
             Phidget.valve_0(True)
             #calculate the total water added in 30 seconds by the flow sensor
-            caudal_0 = round(Phidget.flow_0(), 2)
-            caudal_1 = round(Phidget.flow_1(), 2)
+            caudal_0 = round(Phidget.flow_0(), 3)
+            caudal_1 = round(Phidget.flow_1(), 3)
 
 
         print("Finalizando riego")
@@ -192,10 +192,10 @@ class ActiveState(State):
         Phidget.valve_0(False)
         # caudal_0 = round(Phidget.flow_0(), 2)
         # caudal_1 = round(Phidget.flow_1(), 2)
-        estado_humedad_0 = round(Phidget.moist_sensor0(), 2)
-        estado_humedad_1 = round(Phidget.moist_sensor1(), 2)
+        estado_humedad_0 = round(Phidget.moist_sensor0(), 3)
+        estado_humedad_1 = round(Phidget.moist_sensor1(), 3)
         after_irrigation = call_datetime()[0]
-        estado_radiacion = round(Phidget.pyr20_sensor(), 2)
+        estado_radiacion = round(Phidget.pyr20_sensor(), 3)
         Phidget.stop()
         #add_status_log_entry(AAAA_MM_DD=year_month_day, State='Regando', tiempo_inicio=before_irrigation_time, tiempo_actual=call_datetime()[
         #                     0], tiempo_termino=after_irrigation, valve0_status=estado_valvula_0, valve1_status=estado_valvula_1, sensor_caudal0_value=caudal_0, sensor_caudal1_value=caudal_1, sensormoist0_value=estado_humedad_0, sensormoist1_value=estado_humedad_1, radiation_voltage=estado_radiacion)
