@@ -30,7 +30,7 @@ def add_status_log_entry(AAAA_MM_DD='2023-00-00', State='', tiempo_inicio='', ti
     new_entry = None
 
 
-def add_entry(AAAA_MM_DD='2023-00-00', State='', tiempo_inicio='', tiempo_actual='', tiempo_termino='', valve0_status=False, valve1_status=False, sensor_caudal0_value=0.0, sensor_caudal1_value=0.0, sensormoist0_value=0.0, sensormoist1_value=0.0, radiation_voltage=0, evapo_t_acum=0.0, humedad=0, temperatura=0, lisimetro=0):
+def add_entry(AAAA_MM_DD='2023-00-00', State='', tiempo_inicio='', tiempo_actual='', tiempo_termino='', valve0_status=False, valve1_status=False, sensor_caudal0_value=0.0, sensor_caudal1_value=0.0, sensormoist0_value=0.0, sensormoist1_value=0.0,sensormoist2_value=0, radiation_voltage=0, evapo_t_acum=0.0, humedad=0, temperatura=0, lisimetro=0):
     data = {
         "State": State,
         "Initial Time": tiempo_inicio,
@@ -42,6 +42,7 @@ def add_entry(AAAA_MM_DD='2023-00-00', State='', tiempo_inicio='', tiempo_actual
         "Sensor caudal 1": sensor_caudal1_value,
         "Sensor humedad 0": sensormoist0_value,
         "Sensor humedad 1": sensormoist1_value,
+        "Sensor humedad 2": sensormoist2_value,
         "Radiacion [V]": radiation_voltage,
         "Evapotranspiracion acumulada": evapo_t_acum,
         "Humedad": humedad,

@@ -32,7 +32,7 @@ class SimplePhidget:
         self.flow0 = VoltageInput()
         self.flow1 = VoltageInput()
         self.thermopile = VoltageInput()
-        self.anemometer = VoltageInput()
+        self.moist2 = VoltageInput()
         self.pyr20 = VoltageInput()
 
         # Canal de actuadores
@@ -43,7 +43,7 @@ class SimplePhidget:
         self.flow0.setChannel(1)  # Sensor de flujo 0 en Analog Input 1
         self.flow1.setChannel(2)  # Sensor de flujo 1 en Analog Input 2
         self.thermopile.setChannel(3)  # Piranometro en Analog Input 3
-        self.anemometer.setChannel(4)  # Anemometro en Analog Input 4
+        self.moist2.setChannel(4)  # Anemometro en Analog Input 4
         self.pyr20.setChannel(5)  # Sensor de radiacion solar en Analog Input 5
         self.moist0.setChannel(6)  # Sensor humedad en Analog Input 6
         self.moist1.setChannel(7)  # Sensor humedad en Analog Input 7
@@ -56,7 +56,7 @@ class SimplePhidget:
         self.flow0.openWaitForAttachment(5000)
         self.flow1.openWaitForAttachment(5000)
         self.thermopile.openWaitForAttachment(5000)
-        self.anemometer.openWaitForAttachment(5000)
+        self.moist2.openWaitForAttachment(5000)
         self.pyr20.openWaitForAttachment(5000)
         self.valve_0(False)
         self.valve_1(False)
@@ -85,6 +85,9 @@ class SimplePhidget:
 
     def moist_sensor1(self):
         return self.moist1.getVoltage()
+    
+    def moist_sensor2(self):
+        return self.moist2.getVoltage()
 
     def flow_0(self):
         return self.flow0.getVoltage()
@@ -95,19 +98,16 @@ class SimplePhidget:
     def thermopile_sensor(self):
         return self.thermopile.getVoltage()
 
-    def anemometer_sensor(self):
-        return self.anemometer.getVoltage()
-
     def pyr20_sensor(self):
         return self.pyr20.getVoltage()
 
     def stop(self):
         self.moist0.close()
         self.moist1.close()
+        self.moist2.close()
         self.flow0.close()
         self.flow1.close()
         self.relay_out0.close()
         self.relay_out1.close()
         self.thermopile.close()
-        self.anemometer.close()
         self.pyr20.close()
