@@ -60,7 +60,6 @@ class SimplePhidget:
         self.pyr20.openWaitForAttachment(5000)
         self.valve_0(False)
         self.valve_1(False)
-        print("Valvulas Cerradas para comenzar")
         time.sleep(2)
 
     def valve_0(self, valve0_state):

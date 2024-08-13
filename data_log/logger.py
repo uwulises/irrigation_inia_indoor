@@ -59,6 +59,7 @@ def add_entry(AAAA_MM_DD='2023-00-00', State='', tiempo_inicio='', tiempo_actual
     data_load.append(data)
     with open('log/invernadero_log.json', 'w') as dumpfile:
         json.dump(data_load, dumpfile, indent=4)
+    dumpfile.close()
     
     
 
@@ -66,6 +67,7 @@ def get_actual_time():
     with open('log/invernadero_log.json', 'r') as loadfile:
         data_log = json.load(loadfile)
     last_tiempo_actual = data_log[-1]['Tiempo Actual']
+    loadfile.close()
     #print(last_tiempo_actual)
     return last_tiempo_actual
 
