@@ -26,8 +26,10 @@ String time;
 #define sensor_humedad_suelo_2 A4
 #define sensor_radiacion A5
 #define atmos 4
-#define lisimetro_sck 7
-#define lisimetro_dout 8
+#define lisimetro_sck 8
+#define lisimetro_dout 9
+
+HX711 lisimetro_celda;
 
 int moist0 = 0;
 int moist1 = 0;
@@ -64,7 +66,7 @@ void read_sensors_json(){
   moist1 = analogRead(sensor_humedad_suelo_1);
   moist2 = analogRead(sensor_humedad_suelo_2);
   radiation = analogRead(sensor_radiacion);
-  lisimetro = 0;
+  lisimetro = (lisimetro_celda.get_units(5)*0.0255)-20.82;
   temperature = 0;
   hr = 0;
   doc["Sensor humedad suelo 0"] = moist0;
@@ -176,7 +178,9 @@ void setup() {
   digitalWrite(solenoide_1, LOW);
   attachInterrupt(digitalPinToInterrupt(flowpin0), flow0Interrupt, RISING);
   attachInterrupt(digitalPinToInterrupt(flowpin1), flow1Interrupt, RISING);
-  
+  lisimetro_celda.begin(lisimetro_dout, lisimetro_sck);
+  lisimetro_celda.set_scale();
+  delay(1000);
   inputString.reserve(200);
 }
 

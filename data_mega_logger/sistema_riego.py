@@ -4,8 +4,7 @@ import json
 import datetime
 import time
 
-#ser = serial.Serial('/dev/ttyACM0', 9600)
-ser = serial.Serial('COM23', 9600)
+ser = serial.Serial('/dev/ttyACM0', 9600)
 
 while True:
     data = ser.readline().decode('utf-8')
