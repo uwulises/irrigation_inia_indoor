@@ -66,7 +66,7 @@ void read_sensors_json(){
   moist1 = analogRead(sensor_humedad_suelo_1);
   moist2 = analogRead(sensor_humedad_suelo_2);
   radiation = analogRead(sensor_radiacion);
-  lisimetro = (lisimetro_celda.get_units(5)*0.0255)-20.82;
+  lisimetro = (lisimetro_celda.get_units(5)*0.0255)-20.82 > 0 ? (lisimetro_celda.get_units(5)*0.0255)-20.82 : 0;
   temperature = 0;
   hr = 0;
   doc["Sensor humedad suelo 0"] = moist0;
