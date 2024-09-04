@@ -80,17 +80,17 @@ void read_sensors_json(){
 
 void solenoid_state(String selector){
   if (selector == "11"){
-    digitalWrite(solenoide_0, HIGH);
+    digitalWrite(solenoide_0, LOW);
     delay(100);
-    digitalWrite(solenoide_1, HIGH);
+    digitalWrite(solenoide_1, LOW);
     delay(100);
   }
   if (selector == "00"){
-    digitalWrite(solenoide_0, HIGH);
+    digitalWrite(solenoide_0, LOW);
     delay(100);
   }
   if (selector == "01"){
-    digitalWrite(solenoide_1, HIGH);
+    digitalWrite(solenoide_1, LOW);
     delay(100);
   }
 }
@@ -158,8 +158,8 @@ void riego(String selector, String liters, String time){
   doc["Litros regados 1"] = count1/444;
   Serial.println(count0);
   Serial.println(count1);
-  digitalWrite(solenoide_0, LOW);
-  digitalWrite(solenoide_1, LOW);
+  digitalWrite(solenoide_0, HIGH);
+  digitalWrite(solenoide_1, HIGH);
   //reset pulse count
   count0 = 0;
   count1 = 0;
@@ -174,8 +174,8 @@ void setup() {
   pinMode(A5, INPUT);  // Sensor radiacion [V]
   pinMode(solenoide_0, OUTPUT);  // Solenoide 0
   pinMode(solenoide_1, OUTPUT);  // Solenoide 1
-  digitalWrite(solenoide_0, LOW);
-  digitalWrite(solenoide_1, LOW);
+  digitalWrite(solenoide_0, HIGH);
+  digitalWrite(solenoide_1, HIGH);
   attachInterrupt(digitalPinToInterrupt(flowpin0), flow0Interrupt, RISING);
   attachInterrupt(digitalPinToInterrupt(flowpin1), flow1Interrupt, RISING);
   lisimetro_celda.begin(lisimetro_dout, lisimetro_sck);
