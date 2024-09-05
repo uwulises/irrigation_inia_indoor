@@ -2,7 +2,7 @@ import serial
 import json
 import datetime
 import os
-import logging
+#import logging
 
 '''Mensaje serial para riego "REG_S00_L0000_T0000\n"
     Considera lado 0 y 1, litros o tiempo de riego'''
@@ -25,15 +25,15 @@ def check_lisimetro(lisimetro):
     pass
 
 # Setup logging
-logging.basicConfig(filename='serial_to_json.log', level=logging.INFO, 
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+# logging.basicConfig(filename='serial_to_json.log', level=logging.INFO, 
+#                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Initialize serial connection
 try:
     ser = serial.Serial(S_PORT, 9600, timeout=305)  # 5-minute timeout
-    logging.info("Serial connection established.")
+   # logging.info("Serial connection established.")
 except serial.SerialException as e:
-    logging.error(f"Failed to connect to serial port: {e}")
+    #logging.error(f"Failed to connect to serial port: {e}")
     raise SystemExit(e)
 
 # JSON file path
@@ -43,7 +43,7 @@ json_file_path = 'registros.json'
 if not os.path.exists(json_file_path):
     with open(json_file_path, 'w') as file:
         json.dump([], file)
-    logging.info(f"Created new JSON file: {json_file_path}")
+    #logging.info(f"Created new JSON file: {json_file_path}")
 
 while True:
     try:
@@ -56,7 +56,7 @@ while True:
             # Parse the JSON data
             data_dict = json.loads(data)
         except json.JSONDecodeError as e:
-            logging.warning(f"Failed to decode JSON: {e}")
+           # logging.warning(f"Failed to decode JSON: {e}")
             continue  # Skip invalid JSON
 
         # Add timestamp
@@ -67,7 +67,7 @@ while True:
             with open(json_file_path, 'r') as loadfile:
                 data_load = json.load(loadfile)
         except (json.JSONDecodeError, FileNotFoundError) as e:
-            logging.error(f"Error reading JSON file: {e}")
+           # logging.error(f"Error reading JSON file: {e}")
             data_load = []
 
         # Append the new data
@@ -79,4 +79,5 @@ while True:
         #logging.info(f"Data saved: {data_dict}")
 
     except Exception as e:
-        logging.error(f"An unexpected error occurred: {e}")
+        pass
+      #  logging.error(f"An unexpected error occurred: {e}")
