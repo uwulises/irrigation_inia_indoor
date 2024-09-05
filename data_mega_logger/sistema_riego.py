@@ -3,17 +3,36 @@ import json
 import datetime
 import os
 #import logging
-
 '''Mensaje serial para riego "REG_S00_L0000_T0000\n"
     Considera lado 0 y 1, litros o tiempo de riego'''
 
 LISIMETRO_MINIMO_GR = 10
-HUMEDAD_MINIMA = 0.8
+HUMEDAD_SUELO_MINIMA = 80
+CAPACIDAD_CAMPO_0 = 229
+CAPACIDAD_CAMPO_1 = 215
+CAPACIDAD_CAMPO_2 = 230
+VPMP0=114.5
+VPMP1=107.5
+VPMP2=115
 S_PORT= '/dev/ttyACM0'
 
-def check_moisture_level(moisture_level0, moisture_level1):
-    global ser    
-    pass
+def check_moisture_level(moisture_level0, moisture_level1): 
+    global ser
+    moist_0_level= 100*(1-(CAPACIDAD_CAMPO_2-moisture_level0)/(CAPACIDAD_CAMPO_2-VPMP2))
+    moist_1_level= 100*(1-(CAPACIDAD_CAMPO_1-moisture_level1)/(CAPACIDAD_CAMPO_1-VPMP1))
+    if moist_0_level < HUMEDAD_SUELO_MINIMA and moist_1_level < HUMEDAD_SUELO_MINIMA:
+        recarga_tiempo=102
+        msg = "REG_S11_" + "L0000" + "_T" + str(recarga_tiempo).zfill(4) + "\n"
+        ser.write(msg.encode())
+    elif moist_0_level < HUMEDAD_SUELO_MINIMA:
+        recarga_tiempo=102
+        msg = "REG_S00_" + "L0000" + "_T" + str(recarga_tiempo).zfill(4) + "\n"
+        ser.write(msg.encode())    
+    elif moist_1_level < HUMEDAD_SUELO_MINIMA:
+        recarga_tiempo=102
+        msg = "REG_S01_" + "L0000" + "_T" + str(recarga_tiempo).zfill(4) + "\n"
+        ser.write(msg.encode())
+
 def check_lisimetro(lisimetro):
     global ser
     if lisimetro < LISIMETRO_MINIMO_GR:
@@ -77,6 +96,11 @@ while True:
         with open(json_file_path, 'w') as dumpfile:
             json.dump(data_load, dumpfile, indent=4)
         #logging.info(f"Data saved: {data_dict}")
+        #take last moisture level and lisimetro value
+        moisture_level0 = data_dict['moisture_level0']
+        moisture_level1 = data_dict['moisture_level1']
+        lisimetro = data_dict['lisimetro']
+        check_moisture_level(moisture_level0, moisture_level1)
 
     except Exception as e:
         pass
