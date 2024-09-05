@@ -1,5 +1,5 @@
 #include <ArduinoJson.h>
-#include <SDI12.h>
+//#include <SDI12.h>
 #include "HX711.h"
 
 
@@ -17,8 +17,8 @@ volatile unsigned long count1 = 0;
 String selector;
 String liters;
 String time;
-#define solenoide_0 5
-#define solenoide_1 6
+#define solenoide_0 6
+#define solenoide_1 5
 #define flowpin0 2
 #define flowpin1 3
 #define sensor_humedad_suelo_0 A2
@@ -106,12 +106,17 @@ void riego_litros(int totalpulseCount, String selector){
   if (selector == "00"){
     while (count0 < totalpulseCount){
     }
+    // Serial.print("count 0:");
+    // Serial.println(count0);
     doc["Tiempo regado 0"] = (millis() - riego_litros_timer)/1000;
   }
   if (selector == "01"){
     while (count1 < totalpulseCount){
     }
+    // Serial.print("count 1:");
+    // Serial.println(count1);
     doc["Tiempo regado 1"] = (millis() - riego_litros_timer)/1000;
+    
   }
 
 }
@@ -123,17 +128,22 @@ void riego_tiempo(unsigned long tiempo_riego){
 
 void riego(String selector, String liters, String time){
   startTime = millis();
+  Serial.print("S");
   Serial.print(selector);
+  Serial.print("L");
   Serial.print(liters);
+  Serial.print("T");
   Serial.println(time);
   //clear pulse count
   count0 = 0;
   count1 = 0;
   //string to int
   int litros = liters.toInt();
+  // Serial.print("Litros ");
+  // Serial.println(litros);
   tiempo_riego = time.toInt()*1000;
-  Serial.print("Tiempo riego millis: ");
-  Serial.println(tiempo_riego);
+  // Serial.print("Tiempo riego millis: ");
+  // Serial.println(tiempo_riego);
 
 
   //convert litros to pulse Count (each pulse 2.25 ml)
@@ -145,19 +155,22 @@ void riego(String selector, String liters, String time){
   //check by liters or time
   if (litros>0){
     Serial.println("Riego por litros");
+    // Serial.print("Conteo: ");
+    // Serial.println(totalpulseCount);
     riego_litros(totalpulseCount, selector);
   }
   if (tiempo_riego>0){
     Serial.println("Riego por tiempo");
     riego_tiempo(tiempo_riego);
     doc["Tiempo regado 0"] = tiempo_riego/1000;
+    tiempo_riego=0;
   }
 
   //count to liters
   doc["Litros regados 0"] = count0/444;
   doc["Litros regados 1"] = count1/444;
-  Serial.println(count0);
-  Serial.println(count1);
+  // Serial.println(count0);
+  // Serial.println(count1);
   digitalWrite(solenoide_0, HIGH);
   digitalWrite(solenoide_1, HIGH);
   //reset pulse count
