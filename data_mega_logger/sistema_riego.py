@@ -16,6 +16,20 @@ VPMP1=107.5
 VPMP2=115
 S_PORT= '/dev/ttyACM0'
 
+def riego_manual(lado, tiempo, litros):
+    global ser
+    if lado == 0:
+        msg = "REG_S00_" + "L" + str(litros).zfill(4) + "_T" + str(tiempo).zfill(4) + "\n"
+        ser.write(msg.encode())
+    elif lado == 1:
+        msg = "REG_S01_" + "L" + str(litros).zfill(4) + "_T" + str(tiempo).zfill(4) + "\n"
+        ser.write(msg.encode())
+    elif lado == 2:
+        msg = "REG_S11_" + "L" + str(litros).zfill(4) + "_T" + str(tiempo).zfill(4) + "\n"
+        ser.write(msg.encode())
+    else:
+        print("Lado no valido")
+
 def check_moisture_level(moisture_level0, moisture_level1): 
     global ser
     moist_0_level= 100*(1-(CAPACIDAD_CAMPO_2-moisture_level0)/(CAPACIDAD_CAMPO_2-VPMP2))

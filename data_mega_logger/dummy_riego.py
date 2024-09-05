@@ -21,12 +21,13 @@ def riego_manual(lado, tiempo, litros):
         ser.write(msg.encode())
     else:
         print("Lado no valido")
+while True:
+    try:
+        ser = serial.Serial(S_PORT, 9600, timeout=305)  # 5-minute timeout
+    # logging.info("Serial connection established.")
+        riego_manual(0, 600,0)
+    except serial.SerialException as e:
+        #logging.error(f"Failed to connect to serial port: {e}")
+        raise SystemExit(e)
 
-try:
-    ser = serial.Serial(S_PORT, 9600, timeout=305)  # 5-minute timeout
-   # logging.info("Serial connection established.")
-except serial.SerialException as e:
-    #logging.error(f"Failed to connect to serial port: {e}")
-    raise SystemExit(e)
 
-riego_manual(0, 420,0)
