@@ -2,13 +2,14 @@ import serial
 import json
 import datetime
 import os
+import time
 #import logging
 '''Mensaje serial para riego "REG_S00_L0000_T0000\n"
     Considera lado 0 y 1, litros o tiempo de riego'''
 
 S_PORT= '/dev/ttyACM0'
 
-def riego_manual(lado, tiempo, litros):
+def riego_manual(lado, litros, tiempo):
     global ser
     if lado == 0:
         msg = "REG_S00_" + "L" + str(litros).zfill(4) + "_T" + str(tiempo).zfill(4) + "\n"
@@ -21,13 +22,16 @@ def riego_manual(lado, tiempo, litros):
         ser.write(msg.encode())
     else:
         print("Lado no valido")
-while True:
-    try:
-        ser = serial.Serial(S_PORT, 9600, timeout=305)  # 5-minute timeout
-    # logging.info("Serial connection established.")
-        riego_manual(0, 600,0)
-    except serial.SerialException as e:
-        #logging.error(f"Failed to connect to serial port: {e}")
-        raise SystemExit(e)
+
+try:
+    ser = serial.Serial(S_PORT, 9600,timeout=305,write_timeout=10)  # 5-minute timeout
+    time.sleep(2)
+    riego_manual(0,0,114)
+# logging.info("Serial connection established.")
+except serial.SerialException as e:
+    #logging.error(f"Failed to connect to serial port: {e}")
+    raise SystemExit(e)
+
+
 
 
