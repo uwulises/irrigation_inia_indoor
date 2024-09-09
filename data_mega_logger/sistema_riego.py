@@ -67,7 +67,8 @@ try:
    # logging.info("Serial connection established.")
 except serial.SerialException as e:
     #logging.error(f"Failed to connect to serial port: {e}")
-    raise SystemExit(e)
+    #raise SystemExit(e)
+    pass
 
 # JSON file path
 json_file_path = 'registros.json'
@@ -76,6 +77,7 @@ json_file_path = 'registros.json'
 if not os.path.exists(json_file_path):
     with open(json_file_path, 'w') as file:
         json.dump([], file)
+    file.close()
     #logging.info(f"Created new JSON file: {json_file_path}")
 
 while True:
@@ -109,6 +111,7 @@ while True:
         # Write the updated data back to the JSON file
         with open(json_file_path, 'w') as dumpfile:
             json.dump(data_load, dumpfile, indent=4)
+        dumpfile.close()
         #logging.info(f"Data saved: {data_dict}")
         #take last moisture level and lisimetro value
         moisture_level0 = data_dict['moisture_level0']
