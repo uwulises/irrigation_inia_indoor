@@ -8,7 +8,7 @@ import time
     Considera lado 0 y 1, litros o tiempo de riego'''
 
 LISIMETRO_MINIMO_GR = 10
-HUMEDAD_SUELO_MINIMA = 80
+HUMEDAD_SUELO_MINIMA = 90
 CAPACIDAD_CAMPO_0 = 224
 CAPACIDAD_CAMPO_1 = 192
 CAPACIDAD_CAMPO_2 = 224
@@ -38,18 +38,20 @@ def check_moisture_level(moisture_level0, moisture_level1):
     global ser
     moist_0_level= 100*(1-(CAPACIDAD_CAMPO_2-moisture_level0)/(CAPACIDAD_CAMPO_2-VPMP2))
     moist_1_level= 100*(1-(CAPACIDAD_CAMPO_1-moisture_level1)/(CAPACIDAD_CAMPO_1-VPMP1))
-    if moist_0_level < HUMEDAD_SUELO_MINIMA and moist_1_level < HUMEDAD_SUELO_MINIMA:
-        recarga_tiempo=102
-        msg = "REG_S11_" + "L0000" + "_T" + str(recarga_tiempo).zfill(4) + "\n"
-        ser.write(msg.encode())
-    elif moist_0_level < HUMEDAD_SUELO_MINIMA:
-        recarga_tiempo=102
-        msg = "REG_S00_" + "L0000" + "_T" + str(recarga_tiempo).zfill(4) + "\n"
+    # if moist_0_level < HUMEDAD_SUELO_MINIMA and moist_1_level < HUMEDAD_SUELO_MINIMA:
+    #     recarga_tiempo=102
+    #     msg = "REG_S11_" + "L0000" + "_T" + str(recarga_tiempo).zfill(4) + "\n"
+    #     ser.write(msg.encode())
+    if moist_0_level < HUMEDAD_SUELO_MINIMA:
+        #"HUM_S00_L0000\n" Limit
+        limit_0 = CAPACIDAD_CAMPO_0
+        msg = "REG_S00_" + "L" + str(limit_0).zfill(4) + "\n"
         ser.write(msg.encode())    
     elif moist_1_level < HUMEDAD_SUELO_MINIMA:
-        recarga_tiempo=102
-        msg = "REG_S01_" + "L0000" + "_T" + str(recarga_tiempo).zfill(4) + "\n"
+        limit_1 = CAPACIDAD_CAMPO_1
+        msg = "REG_S01_" + "L" + str(limit_1).zfill(4) + "\n"
         ser.write(msg.encode())
+    msg=""
 
 def check_lisimetro(lisimetro):
     global ser
