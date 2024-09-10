@@ -2,18 +2,19 @@ import serial
 import json
 import datetime
 import os
+import time
 #import logging
 '''Mensaje serial para riego "REG_S00_L0000_T0000\n"
     Considera lado 0 y 1, litros o tiempo de riego'''
 
 LISIMETRO_MINIMO_GR = 10
 HUMEDAD_SUELO_MINIMA = 80
-CAPACIDAD_CAMPO_0 = 229
-CAPACIDAD_CAMPO_1 = 215
-CAPACIDAD_CAMPO_2 = 230
-VPMP0=114.5
-VPMP1=107.5
-VPMP2=115
+CAPACIDAD_CAMPO_0 = 224
+CAPACIDAD_CAMPO_1 = 192
+CAPACIDAD_CAMPO_2 = 224
+VPMP0=CAPACIDAD_CAMPO_0/2
+VPMP1=CAPACIDAD_CAMPO_1/2
+VPMP2=CAPACIDAD_CAMPO_2/2
 S_PORT= '/dev/ttyACM0'
 
 def riego_manual(lado, tiempo, litros):
@@ -21,12 +22,15 @@ def riego_manual(lado, tiempo, litros):
     if lado == 0:
         msg = "REG_S00_" + "L" + str(litros).zfill(4) + "_T" + str(tiempo).zfill(4) + "\n"
         ser.write(msg.encode())
+        time.sleep(2)
     elif lado == 1:
         msg = "REG_S01_" + "L" + str(litros).zfill(4) + "_T" + str(tiempo).zfill(4) + "\n"
         ser.write(msg.encode())
+        time.sleep(2)
     elif lado == 2:
         msg = "REG_S11_" + "L" + str(litros).zfill(4) + "_T" + str(tiempo).zfill(4) + "\n"
         ser.write(msg.encode())
+        time.sleep(2)
     else:
         print("Lado no valido")
 
@@ -68,6 +72,7 @@ try:
 except serial.SerialException as e:
     #logging.error(f"Failed to connect to serial port: {e}")
     #raise SystemExit(e)
+    print(e)
     pass
 
 # JSON file path
@@ -92,6 +97,7 @@ while True:
             data_dict = json.loads(data)
         except json.JSONDecodeError as e:
            # logging.warning(f"Failed to decode JSON: {e}")
+            print(e)
             continue  # Skip invalid JSON
 
         # Add timestamp
@@ -103,6 +109,7 @@ while True:
                 data_load = json.load(loadfile)
         except (json.JSONDecodeError, FileNotFoundError) as e:
            # logging.error(f"Error reading JSON file: {e}")
+            print(e)
             data_load = []
 
         # Append the new data
@@ -120,5 +127,6 @@ while True:
         check_moisture_level(moisture_level0, moisture_level1)
 
     except Exception as e:
+        print(e)
         pass
       #  logging.error(f"An unexpected error occurred: {e}")
