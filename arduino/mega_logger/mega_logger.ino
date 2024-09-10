@@ -38,7 +38,11 @@ int radiation = 0;
 float lisimetro = 0;
 int temperature = 0;
 int hr = 0;
-
+int moist_limit;
+float litros_0 = 0;
+float litros_1 = 0;
+int tiempo_regado_0 = 0;
+int tiempo_regado_1 = 0;
 
 void serialEvent() {
   while (Serial.available()) {
@@ -76,6 +80,10 @@ void read_sensors_json(){
   doc["Lisimetro"] = lisimetro;
   doc["Sensor temperatura"] = temperature;
   doc["Sensor humedad relativa"] = hr;
+  doc["Litros regados 0"] = litros_0;
+  doc["Litros regados 1"] = litros_1;
+  // doc["Tiempo regado 0"] = tiempo_regado_0;
+  // doc["Tiempo regado 1"] = tiempo_regado_1;
 }
 
 void solenoid_state(String selector){
@@ -124,6 +132,41 @@ void riego_litros(int totalpulseCount, String selector){
 void riego_tiempo(unsigned long tiempo_riego){
   while (millis() - startTime < tiempo_riego){
   }
+}
+
+void riego_humedad(String selector,int limit){
+  
+  // Serial.print("Riego por humedad: ");
+  // Serial.print(selector);
+  // Serial.print("\n");
+  // Serial.print("limit: ");
+  // Serial.println(limit);
+  count0 = 0;
+  count1 = 0;
+  if (selector == "00"){
+    while (moist0 < limit){
+      digitalWrite(solenoide_0, LOW);
+    }
+    digitalWrite(solenoide_0, HIGH);
+  }
+  if (selector == "01"){
+    while (moist1 < limit){
+      digitalWrite(solenoide_1, LOW);
+    }
+    digitalWrite(solenoide_1, HIGH);
+  }
+  if (selector == "02"){
+    while (moist2 < limit){
+      digitalWrite(solenoide_0, LOW);
+      digitalWrite(solenoide_1, LOW);
+    }
+    digitalWrite(solenoide_0, HIGH);
+    digitalWrite(solenoide_1, HIGH);
+  }
+  litros_0 = count0/444;
+  litros_1 = count1/444;
+  doc["Litros regados 0"] = litros_0;
+  doc["Litros regados 1"] = litros_1;
 }
 
 void riego(String selector, String liters, String time){
@@ -215,6 +258,12 @@ void loop() {
       liters = inputString.substring(9,13);
       time = inputString.substring(15,19);
       riego(selector, liters, time);
+    }
+    //take substring from "HUM_S00_L0000\n"
+    if (inputString.substring(0,3) == "HUM"){
+      selector = inputString.substring(5,7);
+      moist_limit = inputString.substring(9,13).toInt();
+      riego_humedad(selector, moist_limit);
     }
     // clear the string:
     inputString = "";
