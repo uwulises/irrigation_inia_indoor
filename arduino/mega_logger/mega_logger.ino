@@ -1,5 +1,4 @@
 #include <ArduinoJson.h>
-//#include <SDI12.h>
 #include "HX711.h"
 
 
@@ -135,23 +134,22 @@ void riego_tiempo(unsigned long tiempo_riego){
 }
 
 void riego_humedad(String selector,int limit){
-  
-  // Serial.print("Riego por humedad: ");
-  // Serial.print(selector);
-  // Serial.print("\n");
-  // Serial.print("limit: ");
-  // Serial.println(limit);
   count0 = 0;
   count1 = 0;
+  startTime = millis();
   if (selector == "00"){
     while (moist0 < limit){
       digitalWrite(solenoide_0, LOW);
+      moist0=analogRead(sensor_humedad_suelo_0);
+      delay(100);
     }
     digitalWrite(solenoide_0, HIGH);
   }
   if (selector == "01"){
     while (moist1 < limit){
       digitalWrite(solenoide_1, LOW);
+      moist1=analogRead(sensor_humedad_suelo_1);
+      delay(100);
     }
     digitalWrite(solenoide_1, HIGH);
   }
@@ -159,14 +157,20 @@ void riego_humedad(String selector,int limit){
     while (moist2 < limit){
       digitalWrite(solenoide_0, LOW);
       digitalWrite(solenoide_1, LOW);
+      moist0=analogRead(sensor_humedad_suelo_0);
+      moist1=analogRead(sensor_humedad_suelo_1);
+      delay(100);
+
     }
     digitalWrite(solenoide_0, HIGH);
     digitalWrite(solenoide_1, HIGH);
   }
   litros_0 = count0/444;
-  litros_1 = count1/444;
+  //litros_1 = count1/444;
   doc["Litros regados 0"] = litros_0;
-  doc["Litros regados 1"] = litros_1;
+  //doc["Litros regados 1"] = litros_1;
+  doc["Tiempo regado 0"] = (millis() - startTime)/1000;
+  //doc["Tiempo regado 1"] = (millis() - startTime)/1000;
 }
 
 void riego(String selector, String liters, String time){
