@@ -6,7 +6,7 @@ import time
 '''Mensaje serial para riego "REG_S00_L0000_T0000\n"
     Considera lado 0 y 1, litros o tiempo de riego'''
 
-LISIMETRO_MINIMO_GR = 10.0
+LISIMETRO_MINIMO_GR = 19300
 HUMEDAD_SUELO_MINIMA = 90.0
 CAPACIDAD_CAMPO_0 = 224.0
 CAPACIDAD_CAMPO_1 = 192.0
@@ -15,6 +15,7 @@ VPMP0=CAPACIDAD_CAMPO_0/2
 VPMP1=CAPACIDAD_CAMPO_1/2
 VPMP2=CAPACIDAD_CAMPO_2/2
 S_PORT= '/dev/ttyACM0'
+TIEMPO_RIEGO_LISIMETRO = 228
 
 def riego_manual(lado, tiempo, litros):
     global ser
@@ -41,7 +42,7 @@ def check_moisture_level(moisture_level0, moisture_level1):
     if moist_0_level < HUMEDAD_SUELO_MINIMA:
         limit_0 = CAPACIDAD_CAMPO_0
         msg = "HUM_S00_" + "L" + str(limit_0).zfill(4) + "\n"
-        print("msg: ",msg)
+        #print("msg: ",msg)
         ser.write(msg.encode())
     # elif moist_1_level < HUMEDAD_SUELO_MINIMA:
     #     limit_1 = CAPACIDAD_CAMPO_1
@@ -49,15 +50,20 @@ def check_moisture_level(moisture_level0, moisture_level1):
     #     ser.write(msg.encode())
     msg=""
 
+'''#Revisa si hay mas de 400g de diferencia y debe reponer hasta 19300g
+    El riego es de 3 min 48s a eficiencia de 90%
+    Riega ensayo T1
+    "REG_S01_L0000_T0000\n" '''
+
 def check_lisimetro(lisimetro):
     global ser
-    if lisimetro < LISIMETRO_MINIMO_GR:
-        recarga_litros=int(abs(lisimetro-LISIMETRO_MINIMO_GR)/1000)
+    if (LISIMETRO_MINIMO_GR-lisimetro) > 400:
+        tiempo = TIEMPO_RIEGO_LISIMETRO
         #zfill 4 digits for recarga_litros
-        recarga = f"L{str(recarga_litros).zfill(4)}"
-        msg = "REG_S00_" + recarga + "_T0000\n"
+        recarga = f"T{str(tiempo).zfill(4)}\n"
+        msg = "REG_S01_L0000_" + recarga
         ser.write(msg.encode())
-    pass
+    msg=""
 
 # Initialize serial connection
 try:
@@ -111,8 +117,9 @@ while True:
             dumpfile.close()
             moisture_level0 = int(data_dict['Sensor humedad suelo 0'])
             moisture_level1 = int(data_dict['Sensor humedad suelo 1'])
-            lisimetro = data_dict['Lisimetro']
+            lisimetro = int(data_dict['Lisimetro'])
             check_moisture_level(moisture_level0, moisture_level1)
+            check_lisimetro(lisimetro)
 
     except Exception as e:
         print(e)
