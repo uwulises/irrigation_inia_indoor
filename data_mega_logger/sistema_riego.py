@@ -6,7 +6,7 @@ import time
 '''Mensaje serial para riego "REG_S00_L0000_T0000\n"
     Considera lado 0 y 1, litros o tiempo de riego'''
 
-LISIMETRO_MINIMO_GR = 19300
+LISIMETRO_MINIMO_GR = 18700
 HUMEDAD_SUELO_MINIMA = 90.0
 CAPACIDAD_CAMPO_0 = 224.0
 CAPACIDAD_CAMPO_1 = 192.0
@@ -15,7 +15,7 @@ VPMP0=CAPACIDAD_CAMPO_0/2
 VPMP1=CAPACIDAD_CAMPO_1/2
 VPMP2=CAPACIDAD_CAMPO_2/2
 S_PORT= '/dev/ttyACM0'
-TIEMPO_RIEGO_LISIMETRO = 228
+TIEMPO_RIEGO_LISIMETRO = 308 #600g
 
 def riego_manual(lado, tiempo, litros):
     global ser
