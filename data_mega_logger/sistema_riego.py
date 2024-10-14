@@ -57,7 +57,7 @@ def check_moisture_level(moisture_level0, moisture_level1):
 
 def check_lisimetro(lisimetro):
     global ser
-    if (LISIMETRO_MINIMO_GR-lisimetro) > 400:
+    if (LISIMETRO_MINIMO_GR-lisimetro) > 600:
         tiempo = TIEMPO_RIEGO_LISIMETRO
         #zfill 4 digits for recarga_litros
         recarga = f"T{str(tiempo).zfill(4)}\n"
