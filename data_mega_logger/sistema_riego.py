@@ -6,7 +6,7 @@ import time
 '''Mensaje serial para riego "REG_S00_L0000_T0000\n"
     Considera lado 0 y 1, litros o tiempo de riego'''
 
-LISIMETRO_MINIMO_GR = 18700
+LISIMETRO_MINIMO_GR = 18700.0
 HUMEDAD_SUELO_MINIMA = 90.0
 CAPACIDAD_CAMPO_0 = 224.0
 CAPACIDAD_CAMPO_1 = 192.0
